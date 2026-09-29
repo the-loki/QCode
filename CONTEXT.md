@@ -7,42 +7,30 @@
 ### 市场与来源
 
 **Official Marketplace（官方市场）**:
-ZCode 官方运营的唯一分发渠道，市场 id 为 `zcode-plugins-official`，内容 = 内置插件 + CDN 插件。是"分发渠道"而非"作者归属"——其中可以收录社区作者的插件。
+ZCode 官方运营的唯一分发渠道，市场 id 为 `zcode-plugins-official`，内容 = 内置插件。是"分发渠道"而非"作者归属"——其中可以收录社区作者的插件。
 _Avoid_: "官方"泛指一切受信市场
 
 **Builtin Plugin（内置插件）**:
 随应用包一起分发、启动时播种进官方市场的插件。是官方插件的子集。
 _Avoid_: 预装插件、bundled plugin（口语可用，文档统一"内置"）
 
-**CDN Plugin（CDN 插件）**:
-官方市场中通过官方 CDN 以 sha256 校验的 zip 包分发、按需下载安装的插件。
-_Avoid_: 网络插件、在线插件
-
 **Personal Source（个人来源）**:
 用户自行添加的一切插件来源：git/GitHub/URL/本地目录市场、inline 插件。
 _Avoid_: 无
 
-**Catalog Auto-Refresh（目录自动刷新）**:
-进入商店页时对 Official Marketplace 目录的节流后台刷新，用户无感知；只覆盖官方市场。
-_Avoid_: 与 Manual Refresh 混用；把它称作"检查更新"（更新角标只是刷新的副产物）
-
 **Manual Refresh（手动刷新）**:
-商店页顶栏刷新按钮触发的全市场刷新，不受自动刷新节流影响。
+商店页顶栏刷新按钮触发的市场目录重载（官方市场收缩后为重读内置插件目录）。
 _Avoid_: 刷新、检查更新（口语可用，文档统一"手动刷新"）
 
 ### 商店页结构
 
 **Public Segment（公开）**:
-商店列表页的分段之一，展示且仅展示官方市场的目录（Featured + 分类区块）。
+商店列表页的分段之一，展示且仅展示官方市场的目录（分类区块）。
 _Avoid_: 官方 tab、商店 tab
 
 **Personal Segment（个人）**:
 商店列表页的另一分段，展示全部个人来源的目录，按市场分组。
 _Avoid_: 第三方 tab、我的 tab
-
-**Featured（精选）**:
-公开分段顶部的策展区，名单由官方 CDN 目录的 `featured` 字段远程控制。仅存在于公开分段。
-_Avoid_: 与 Recommended 混用
 
 **Installed Strip（已安装条）**:
 列表页顶部的一排已安装插件图标，点击图标进入详情页。
@@ -74,8 +62,18 @@ _Avoid_: 仅把“安装成功”称为完整生命周期
 
 **Restorable Builtin（可恢复内置插件）**:
 被用户卸载并进入持久化抑制状态的 Builtin Plugin。应用重启不得自动重新播种；它继续出现在 Public Segment，并通过“安装”入口执行干净恢复。
-_Avoid_: 未安装 CDN 插件、临时禁用的内置插件
+_Avoid_: 未安装的插件、临时禁用的内置插件
 
 **Orphaned Installed Plugin（孤立已安装插件）**:
 对应 Personal Source 已被删除、但安装目录和用户数据仍保留的插件。它仍可使用、配置、启停和卸载；来源重新添加前不能更新，重新添加同一来源后恢复目录关联。
 _Avoid_: 安装损坏、manifest 缺失、已卸载插件
+
+### 事实源
+
+**Plugin Facts Source（插件事实源）**:
+插件"已安装/启用/抑制"状态的唯一推导出处，位于服务一侧；页面与各贡献者服务只消费其结果，不各自重读 CLI config 或安装记录。
+_Avoid_: 各处自行扫描安装记录、在 UI 推导已安装状态
+
+**Candidate Root Order（候选根顺序）**:
+同一插件在多个来源同时存在时，解析其物理目录的优先级：inline 目录（config.dirs）→ Official Marketplace 的内置 cache → installed_plugins.json，先者胜。
+_Avoid_: "cache 优先"、"安装优先"等无明确指向的说法（以本词条为准）
