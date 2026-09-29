@@ -14,19 +14,19 @@ import zcodeGuideIconUrl from "@/assets/plugin-icons/zcode-guide.png";
 import { isTrustedImageUrl } from "@/lib/trustedImageUrl.js";
 
 const OFFICIAL_PLUGIN_ICON_BY_ID: Readonly<Record<string, string>> = {
-  "documents@zcode-plugins-official": documentsIconUrl,
-  "image-search@zcode-plugins-official": imageSearchIconUrl,
-  "pdf@zcode-plugins-official": pdfIconUrl,
-  "plugin-creator@zcode-plugins-official": pluginCreatorIconUrl,
-  "presentations@zcode-plugins-official": presentationsIconUrl,
-  "spreadsheets@zcode-plugins-official": spreadsheetsIconUrl,
-  "android-emulator@zcode-plugins-official": androidEmulatorIconUrl,
-  "browser-use@zcode-plugins-official": browserUseIconUrl,
-  "ios-simulator@zcode-plugins-official": iosSimulatorIconUrl,
-  "restore-legacy-sessions@zcode-plugins-official": restoreLegacySessionsIconUrl,
-  "skill-creator@zcode-plugins-official": skillCreatorIconUrl,
-  "computer-use@zcode-plugins-official": zcodeCuaIconUrl,
-  "zcode-guide@zcode-plugins-official": zcodeGuideIconUrl,
+  "documents@qcode-plugins-official": documentsIconUrl,
+  "image-search@qcode-plugins-official": imageSearchIconUrl,
+  "pdf@qcode-plugins-official": pdfIconUrl,
+  "plugin-creator@qcode-plugins-official": pluginCreatorIconUrl,
+  "presentations@qcode-plugins-official": presentationsIconUrl,
+  "spreadsheets@qcode-plugins-official": spreadsheetsIconUrl,
+  "android-emulator@qcode-plugins-official": androidEmulatorIconUrl,
+  "browser-use@qcode-plugins-official": browserUseIconUrl,
+  "ios-simulator@qcode-plugins-official": iosSimulatorIconUrl,
+  "restore-legacy-sessions@qcode-plugins-official": restoreLegacySessionsIconUrl,
+  "skill-creator@qcode-plugins-official": skillCreatorIconUrl,
+  "computer-use@qcode-plugins-official": zcodeCuaIconUrl,
+  "zcode-guide@qcode-plugins-official": zcodeGuideIconUrl,
 };
 
 const TRUSTED_BUNDLED_PLUGIN_ICONS = new Set(Object.values(OFFICIAL_PLUGIN_ICON_BY_ID));
