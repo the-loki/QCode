@@ -86,7 +86,6 @@ export {
 
 export {
   writeBundledOfficialMarketplacePartitionSync,
-  writeCdnOfficialMarketplacePartitionSync,
 } from "./official-marketplace.js";
 
 export { getPluginSourceDiagnosticCode } from "./source-errors.js";

@@ -20,7 +20,6 @@ import {
 import { enumeratePluginComponents, type PluginComponentGroup } from "./plugin-components.js";
 import { applyNetworkEgressEnv } from "../network/subprocess-env.js";
 import { createNodeWebFetchHttpClientAdapter } from "../http/index.js";
-import { writeCdnOfficialMarketplacePartitionSync } from "./official-marketplace.js";
 import {
   isZipPluginUrlSource,
   readZipPluginSourceSha256,
@@ -72,7 +71,8 @@ export type MarketplaceSource =
   | { source: "directory"; path: string }
   | { hostPattern: string; source: "hostPattern" }
   | { pathPattern: string; source: "pathPattern" }
-  | { source: "settings"; marketplace: PluginMarketplaceManifest };
+  | { source: "settings"; marketplace: PluginMarketplaceManifest }
+  | { source: "bundled" };
 
 export interface PluginMarketplaceEntry {
   name: string;
@@ -98,8 +98,6 @@ export interface PluginMarketplaceManifest {
   plugins: PluginMarketplaceEntry[];
   allowCrossMarketplaceDependenciesOn?: string[];
   pluginRoot?: string;
-  // 商店「公开」分段 Featured 区的策展名单（插件 name，按序）；由目录 JSON 顶层 featured 字段远程控制。
-  featured?: string[];
   raw: Record<string, unknown>;
 }
 
@@ -280,6 +278,14 @@ export function ensureDefaultPluginMarketplaces(storageRoot: string): KnownMarke
   const known = loadKnownMarketplacesSync(storageRoot);
   const existingIds = new Set(known.map((record) => record.id));
   const now = new Date().toISOString();
+  // 官方市场已收缩为内置 only:历史持久化记录若还带着远程 url source,在此改写,
+  // 否则刷新链会继续按旧 URL 拉取。
+  let migrated = false;
+  const normalized = known.map((record) => {
+    if (!isOfficialMarketplaceId(record.id) || record.source.source === "bundled") return record;
+    migrated = true;
+    return { ...record, source: { source: "bundled" } as MarketplaceSource };
+  });
   const missing = DEFAULT_PLUGIN_MARKETPLACES.filter(
     (marketplace) => !existingIds.has(marketplace.id),
   ).map(
@@ -293,8 +299,8 @@ export function ensureDefaultPluginMarketplaces(storageRoot: string): KnownMarke
       pluginCount: marketplace.pluginCount,
     }),
   );
-  if (missing.length === 0) return known;
-  const next = [...known, ...missing];
+  if (missing.length === 0 && !migrated) return normalized;
+  const next = [...normalized, ...missing];
   writeKnownMarketplacesSync(storageRoot, next);
   return next;
 }
@@ -363,23 +369,7 @@ export async function addMarketplace(input: {
         `Marketplace declaration id mismatch: expected ${input.expectedId}, received ${loaded.manifest.name}`,
       );
     }
-    if (
-      input.trustedId === ZCODE_OFFICIAL_PLUGIN_MARKETPLACE &&
-      loaded.manifest.name !== ZCODE_OFFICIAL_PLUGIN_MARKETPLACE
-    ) {
-      throw new Error(
-        `Official marketplace source must provide ${ZCODE_OFFICIAL_PLUGIN_MARKETPLACE}, received ${loaded.manifest.name}`,
-      );
-    }
-    const persistedManifest =
-      loaded.manifest.name === ZCODE_OFFICIAL_PLUGIN_MARKETPLACE
-        ? parseRequiredMarketplaceManifest(
-            writeCdnOfficialMarketplacePartitionSync({
-              manifest: loaded.manifest.raw,
-              storageRoot: input.storageRoot,
-            }),
-          )
-        : loaded.manifest;
+    const persistedManifest = loaded.manifest;
     // 旧流程先删 marketplace target 再复制 source，刷新失败会丢失最后成功快照。
     // source tree 与规范 manifest 在同一 staging 目录准备完毕后一次 rename 激活。
     if (loaded.sourceRoot) {
@@ -390,7 +380,7 @@ export async function addMarketplace(input: {
         persistedManifest.raw,
         operationSignal,
       );
-    } else if (loaded.manifest.name !== ZCODE_OFFICIAL_PLUGIN_MARKETPLACE) {
+    } else {
       marketplaceActivation = await stageMarketplaceManifest(
         input.storageRoot,
         loaded.manifest.name,
@@ -1514,6 +1504,17 @@ async function loadMarketplaceFromSource(
   switch (source.source) {
     case "settings":
       return { manifest: normalizeMarketplaceManifest(source.marketplace) };
+    case "bundled": {
+      // 官方市场已内置 only:每次启动 bundled seed 都会重写本地合并 manifest,
+      // 这里只做本地重读,绝不发起网络请求。
+      const manifest = loadMarketplaceManifestSync(storageRoot, ZCODE_OFFICIAL_PLUGIN_MARKETPLACE);
+      if (!manifest) {
+        throw new Error(
+          `Bundled marketplace manifest not found: ${ZCODE_OFFICIAL_PLUGIN_MARKETPLACE}`,
+        );
+      }
+      return { manifest };
+    }
     case "file": {
       const parsed = JSON.parse(await readFile(source.path, "utf8")) as unknown;
       return {
@@ -2021,12 +2022,6 @@ function normalizeMarketplaceManifest(
         (item): item is string => typeof item === "string",
       )
     : undefined;
-  // 目录顶层的 Featured 策展名单：仅接受非空字符串数组，去掉空白项。
-  const featured = Array.isArray(value.featured)
-    ? value.featured.filter(
-        (item): item is string => typeof item === "string" && item.trim().length > 0,
-      )
-    : undefined;
   return {
     name: String(value.name),
     ...(typeof value.description === "string"
@@ -2037,7 +2032,6 @@ function normalizeMarketplaceManifest(
     plugins,
     ...(allowCrossMarketplaceDependenciesOn ? { allowCrossMarketplaceDependenciesOn } : {}),
     ...(typeof metadata.pluginRoot === "string" ? { pluginRoot: metadata.pluginRoot } : {}),
-    ...(featured && featured.length > 0 ? { featured } : {}),
     raw: value,
   };
 }

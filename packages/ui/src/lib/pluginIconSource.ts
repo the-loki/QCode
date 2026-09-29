@@ -4,6 +4,13 @@ import pdfIconUrl from "@/assets/plugin-icons/pdf.png";
 import pluginCreatorIconUrl from "@/assets/plugin-icons/plugin-creator.png";
 import presentationsIconUrl from "@/assets/plugin-icons/presentations.png";
 import spreadsheetsIconUrl from "@/assets/plugin-icons/spreadsheets.png";
+import androidEmulatorIconUrl from "@/assets/plugin-icons/android-emulator.png";
+import browserUseIconUrl from "@/assets/plugin-icons/browser-use.png";
+import iosSimulatorIconUrl from "@/assets/plugin-icons/ios-simulator.png";
+import restoreLegacySessionsIconUrl from "@/assets/plugin-icons/restore-legacy-sessions.png";
+import skillCreatorIconUrl from "@/assets/plugin-icons/skill-creator.png";
+import zcodeCuaIconUrl from "@/assets/plugin-icons/zcode-cua.png";
+import zcodeGuideIconUrl from "@/assets/plugin-icons/zcode-guide.png";
 import { isTrustedImageUrl } from "@/lib/trustedImageUrl.js";
 
 const OFFICIAL_PLUGIN_ICON_BY_ID: Readonly<Record<string, string>> = {
@@ -13,6 +20,13 @@ const OFFICIAL_PLUGIN_ICON_BY_ID: Readonly<Record<string, string>> = {
   "plugin-creator@zcode-plugins-official": pluginCreatorIconUrl,
   "presentations@zcode-plugins-official": presentationsIconUrl,
   "spreadsheets@zcode-plugins-official": spreadsheetsIconUrl,
+  "android-emulator@zcode-plugins-official": androidEmulatorIconUrl,
+  "browser-use@zcode-plugins-official": browserUseIconUrl,
+  "ios-simulator@zcode-plugins-official": iosSimulatorIconUrl,
+  "restore-legacy-sessions@zcode-plugins-official": restoreLegacySessionsIconUrl,
+  "skill-creator@zcode-plugins-official": skillCreatorIconUrl,
+  "computer-use@zcode-plugins-official": zcodeCuaIconUrl,
+  "zcode-guide@zcode-plugins-official": zcodeGuideIconUrl,
 };
 
 const TRUSTED_BUNDLED_PLUGIN_ICONS = new Set(Object.values(OFFICIAL_PLUGIN_ICON_BY_ID));

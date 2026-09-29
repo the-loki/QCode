@@ -98,8 +98,6 @@ export interface ZCodeMarketplaceSummaryData {
     failedAt: string;
     message: string;
   };
-  // 目录顶层 featured 策展名单（商店「公开」分段 Featured 区），随 manifest 下发。
-  featured?: string[];
 }
 
 export interface ZCodeAvailablePluginData {
@@ -290,8 +288,7 @@ export function getZCodePluginsOverview(
   const installed = listInstalledPluginRecords(pluginStorageRoot);
   const installedIds = new Set(installed.map((record) => record.id));
 
-  // 每个市场的 manifest 只读一次：同时取 entries（目录条目）与 featured（策展名单）。
-  // zcode-plugins-official 的内置与 CDN 分片已在 adapter 层合并为唯一 canonical manifest。
+  // 每个市场的 manifest 只读一次。官方市场已内置 only:adapter 层只产出唯一 canonical manifest。
   const catalogs: Array<{
     summary: ZCodeMarketplaceSummaryData;
     entries: PluginMarketplaceEntry[];
@@ -306,7 +303,6 @@ export function getZCodePluginsOverview(
     catalogs.push({
       summary: toMarketplaceSummaryData(
         record,
-        manifest?.featured,
         countVisibleMarketplacePlugins(record.id, manifest?.plugins),
       ),
       entries: manifest?.plugins ?? [],
@@ -567,7 +563,7 @@ export async function updateZCodePluginMarketplace(
     );
   }
 
-  // map 回调只吃第一个参数：toMarketplaceSummaryData 的第二参是 featured，不能接 map 的 index。
+  // map 回调只吃第一个参数，不能接 map 的 index。
   const records = loadKnownMarketplacesSync(pluginStorageRoot);
   const selectedFailures = records.flatMap((record): PluginLoadOutcome["diagnostics"] => {
     if (options.marketplace && record.id !== options.marketplace) return [];
@@ -724,8 +720,8 @@ export async function installZCodeMarketplacePlugin(
     };
   }
   if (options.marketplace === ZCODE_OFFICIAL_PLUGIN_MARKETPLACE) {
-    // 官方 marketplace 复用内置插件的 id 空间。若同名 CDN 插件重新安装，
-    // 清掉历史内置 suppression，否则 Runtime 仍会把已拥有的安装误判为 suppressed。
+    // 官方 marketplace 复用内置插件的 id 空间。重装历史内置插件时,
+    // 清掉历史内置 suppression,否则 Runtime 仍会把已拥有的安装误判为 suppressed。
     for (const record of installed.installed) {
       await removeSuppressedBuiltinInFileConfig(configResult.sources.user.path, record.id);
     }
@@ -757,9 +753,9 @@ export async function uninstallZCodeMarketplacePlugin(
   return withPluginStorageLock(pluginStorageRoot, async () => {
     const pluginId = resolvePluginIdForMutation(options);
 
-    // 官方 CDN marketplace 与内置插件共享 zcode-plugins-official id 空间，且其缓存
+    // 官方 marketplace 与内置插件共享 id 空间,且其缓存
     // 也位于 official cache 下。若先看 runtime source="official"，会把已有
-    // installed_plugins.json 记录的 CDN 插件误判成内置插件，只写 suppression 却不删安装记录，
+    // installed_plugins.json 记录的历史安装误判成内置插件，只写 suppression 却不删安装记录，
     // 导致 UI 永远保持 installed、无法重装。持久化安装记录是 marketplace 所有权的权威证据，
     // 必须优先于运行时来源分类；同时清掉可能遗留的错误 suppression，让状态自愈。
     const installedRecord = listInstalledPluginRecords(pluginStorageRoot).find(
@@ -1171,7 +1167,6 @@ function resolvePluginSelector(selector: string, plugins: PluginMetadata[]): Plu
 
 function toMarketplaceSummaryData(
   record: KnownMarketplaceRecord,
-  featured?: string[],
   pluginCount?: number,
 ): ZCodeMarketplaceSummaryData {
   return {
@@ -1191,7 +1186,6 @@ function toMarketplaceSummaryData(
           },
         }
       : {}),
-    ...(featured && featured.length > 0 ? { featured } : {}),
   };
 }
 

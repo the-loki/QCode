@@ -4005,7 +4005,6 @@ const enUS: Record<string, string> = {
   "settings.plugins.store.manageInstalled": "Manage installed",
   "settings.plugins.store.segment.public": "Public",
   "settings.plugins.store.segment.personal": "Personal",
-  "settings.plugins.store.featured": "Featured",
   "settings.plugins.store.category.developerTools": "Developer Tools",
   "settings.plugins.store.category.productivity": "Productivity",
   "settings.plugins.store.category.utilities": "Utilities",

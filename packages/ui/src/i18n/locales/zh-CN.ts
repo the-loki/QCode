@@ -3744,7 +3744,6 @@ const zhCN: Record<string, string> = {
   "settings.plugins.store.manageInstalled": "管理已安装",
   "settings.plugins.store.segment.public": "公开",
   "settings.plugins.store.segment.personal": "个人",
-  "settings.plugins.store.featured": "Featured",
   "settings.plugins.store.category.developerTools": "开发者工具",
   "settings.plugins.store.category.productivity": "生产力",
   "settings.plugins.store.category.utilities": "实用工具",

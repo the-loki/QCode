@@ -3063,8 +3063,6 @@ export const zcodePluginMarketplaceSummarySchema = z
     lastUpdated: z.string().optional(),
     pluginCount: z.number().int().nonnegative(),
     isOfficial: z.boolean().optional(),
-    // 目录顶层 featured 策展名单（商店「公开」分段 Featured 区）。
-    featured: z.array(z.string()).optional(),
     refreshFailure: z
       .object({
         code: z.string(),

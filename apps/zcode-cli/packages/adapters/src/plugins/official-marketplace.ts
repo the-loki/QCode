@@ -3,7 +3,6 @@ import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { ZCODE_OFFICIAL_PLUGIN_MARKETPLACE } from "@zcode/contracts";
 
 const BUNDLED_PARTITION_FILE = "bundled-marketplace.json";
-const CDN_PARTITION_FILE = "cdn-marketplace.json";
 const MERGED_MARKETPLACE_FILE = "marketplace.json";
 
 interface BundledMarketplacePartition {
@@ -20,15 +19,6 @@ export function writeBundledOfficialMarketplacePartitionSync(input: {
     manifest: input.manifest,
     version: 1,
   } satisfies BundledMarketplacePartition);
-  return rebuildOfficialMarketplaceSync(input.storageRoot);
-}
-
-export function writeCdnOfficialMarketplacePartitionSync(input: {
-  manifest: Record<string, unknown>;
-  storageRoot: string;
-}): Record<string, unknown> {
-  assertOfficialManifest(input.manifest);
-  writeJsonFileSync(partitionPath(input.storageRoot, CDN_PARTITION_FILE), input.manifest);
   return rebuildOfficialMarketplaceSync(input.storageRoot);
 }
 
@@ -61,25 +51,13 @@ export function loadBundledOfficialPluginRootsSync(
 }
 
 function rebuildOfficialMarketplaceSync(storageRoot: string): Record<string, unknown> {
-  const bundledPartition = readBundledPartition(storageRoot);
-  const cdnManifest = readJsonRecord(partitionPath(storageRoot, CDN_PARTITION_FILE));
-  const bundledManifest = bundledPartition?.manifest;
-  const cdnPlugins = readPluginEntries(cdnManifest);
-  const cdnPluginNames = new Set(cdnPlugins.map(readPluginName).filter(isDefined));
-  const bundledPlugins = readPluginEntries(bundledManifest).filter((plugin) => {
-    const name = readPluginName(plugin);
-    return name !== undefined && !cdnPluginNames.has(name);
-  });
-
-  // 内置插件与 CDN 插件曾使用两个 marketplace id，UI 会把内置市场当成
-  // 无 source 的独立市场并在刷新时报 not found。两个分片必须独立持久化后再合并，
-  // 否则应用启动时的 seed 会覆盖 CDN 目录，或 CDN 刷新会覆盖内置目录。同名时以
-  // 可刷新的 CDN 市场条目为准，但只过滤合并目录，不删除应用内置缓存。
+  // 官方市场已内置 only:合并 manifest 即 bundled manifest 的规范投影。
+  // 历史遗留的 CDN 分片文件不再读取;用户盘上的残留文件无害。
+  const bundledManifest = readBundledPartition(storageRoot)?.manifest;
   const merged = {
     ...(bundledManifest ?? {}),
-    ...(cdnManifest ?? {}),
     name: ZCODE_OFFICIAL_PLUGIN_MARKETPLACE,
-    plugins: [...cdnPlugins, ...bundledPlugins],
+    plugins: readPluginEntries(bundledManifest),
   };
   writeJsonFileSync(partitionPath(storageRoot, MERGED_MARKETPLACE_FILE), merged);
   return merged;
