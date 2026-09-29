@@ -84,7 +84,7 @@ const ZCODE_CLIENT_CONFIG_API_PREFIX = "/api/v1/client/configs";
 const REQUEST_TIMEOUT_MS = 15_000;
 const CLIENT_CONFIG_CACHE_TTL_MS = 60 * 60 * 1000;
 const CODING_PLAN_ZAI_OVERSEAS_PAYMENT_REQUIRED = "coding_plan_zai_overseas_payment_required";
-const ZCODE_JWT_TOKEN_KEY = "zcodejwttoken";
+const ZCODE_JWT_TOKEN_KEY = "qcodejwttoken";
 const log = createServiceLogger("codingPlanSubscription");
 
 interface RemoteEnvelope<T> {

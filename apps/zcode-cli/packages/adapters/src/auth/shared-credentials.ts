@@ -5,7 +5,7 @@ import { join, resolve } from "node:path";
 import { atomicWritePrivateTextFile, backupCorruptFile, withFileLock } from "@zcode/shared/node";
 import { createZCodeCredentialCipher, type ZCodeCredentialCipher } from "./credential-cipher.js";
 
-const ZCODE_DATA_BASE_DIR_ENV_KEY = "ZCODE_DATA_BASE_DIR";
+const QCODE_DATA_BASE_DIR_ENV_KEY = "QCODE_DATA_BASE_DIR";
 const ZAI_PROVIDER_ID = "zai";
 const credentialChangeListeners = new Map<
   string,
@@ -20,7 +20,7 @@ export const SHARED_ZCODE_CREDENTIAL_KEYS = {
   zaiAccessToken: "oauth:zai:access_token",
   zaiRefreshToken: "oauth:zai:refresh_token",
   zaiUserInfo: "oauth:zai:user_info",
-  zcodeJwtToken: "zcodejwttoken",
+  zcodeJwtToken: "qcodejwttoken",
 } as const;
 
 export interface SharedZCodeCredentialStoreOptions {
@@ -285,8 +285,8 @@ export function resolveSharedZCodeCredentialsPath(
   }
 
   const env = options.env ?? process.env;
-  const baseDir = options.baseDir ?? env[ZCODE_DATA_BASE_DIR_ENV_KEY] ?? homedir();
-  return join(resolveUserPath(baseDir), ".zcode", "v2", "credentials.json");
+  const baseDir = options.baseDir ?? env[QCODE_DATA_BASE_DIR_ENV_KEY] ?? homedir();
+  return join(resolveUserPath(baseDir), ".qcode", "v2", "credentials.json");
 }
 
 async function readRawCredentialRecord(filePath: string): Promise<Record<string, string>> {

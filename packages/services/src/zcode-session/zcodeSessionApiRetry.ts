@@ -114,7 +114,7 @@ function apiRetryFromSessionPayload(
   if (runtimeRetry !== undefined) {
     return runtimeRetry;
   }
-  const metaRetry = normalizeZCodeApiRetryStatus(asRecord(asRecord(payload._meta).zcode).apiRetry);
+  const metaRetry = normalizeZCodeApiRetryStatus(asRecord(asRecord(payload._meta).qcode).apiRetry);
   if (metaRetry !== undefined) {
     return metaRetry;
   }

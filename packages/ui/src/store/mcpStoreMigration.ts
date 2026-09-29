@@ -20,7 +20,7 @@ function isZCodeAgentUserServer(server: NativeMcpServerRecord): boolean {
   return (
     server.source === "zcodeagentmcp" &&
     server.scope === "user" &&
-    (!server.location || server.location.source === "zcode")
+    (!server.location || server.location.source === "qcode")
   );
 }
 

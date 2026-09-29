@@ -495,7 +495,7 @@ function mapModelNetworkStatusPayload(payload: unknown): Record<string, unknown>
     return record;
   }
   const meta = asRecord(record._meta);
-  const zcodeMeta = asRecord(meta.zcode);
+  const zcodeMeta = asRecord(meta.qcode);
   return {
     ...record,
     _meta: {
@@ -517,7 +517,7 @@ function mapStreamRecoveryPayload(payload: unknown): Record<string, unknown> {
     return record;
   }
   const meta = asRecord(record._meta);
-  const zcodeMeta = asRecord(meta.zcode);
+  const zcodeMeta = asRecord(meta.qcode);
   return {
     ...record,
     _meta: {

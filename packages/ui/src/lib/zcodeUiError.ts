@@ -81,7 +81,7 @@ function collectMessageCandidatesFromRecord(record: Record<string, unknown>): st
     ["data", "error", "message"],
     ["data", "error", "detail"],
     ["data", "error", "details"],
-    // zcode-cli 会把模型/网络错误摘要放在 data.zcode.error 下。
+    // zcode-cli 会把模型/网络错误摘要放在 data.qcode.error 下。
     // 之前 UI 只读 data.error，导致已经结构化好的 provider 根因仍被 “Internal error” 盖住。
     ["data", "zcode", "error", "message"],
     ["data", "zcode", "error", "detail"],
@@ -193,7 +193,7 @@ export function normalizeZCodeUiError(
   options: NormalizeZCodeUiErrorOptions = {},
 ): ZCodeUiError {
   const candidates = collectMessageCandidates(error);
-  // zcode-cli 已经把 provider/network 根因放进 detail 或 data.zcode.error，
+  // zcode-cli 已经把 provider/network 根因放进 detail 或 data.qcode.error，
   // 外层仍可能保留 "Internal error" 这类包装文案。主提示优先选非泛化候选，避免根因被盖住。
   const primaryMessage =
     candidates.find((candidate) => !GENERIC_ZCODE_UI_ERROR_MESSAGES.has(candidate)) ??

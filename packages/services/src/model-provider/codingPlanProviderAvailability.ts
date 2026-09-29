@@ -34,7 +34,7 @@ const REQUEST_TIMEOUT_MS = 15_000;
 const log = createServiceLogger("coding-plan-availability");
 const BIGMODEL_SUBSCRIPTION_LIST_PATH = "/api/biz/subscription/list";
 
-const ZCODE_JWT_TOKEN_KEY = "zcodejwttoken";
+const ZCODE_JWT_TOKEN_KEY = "qcodejwttoken";
 
 export type CodingPlanUnavailableReason =
   | "coding_plan_not_authenticated"
@@ -240,7 +240,7 @@ async function validateSelectedTeamPlanAvailability(
     return { kind: "unavailable", reason: "coding_plan_not_connected" };
   }
   const zcodeJwtToken = (await context.credentialService?.load(ZCODE_JWT_TOKEN_KEY))?.trim();
-  // BigModel 旧版本可能把 zcodejwttoken 误写进 oauth access token；
+  // BigModel 旧版本可能把 qcodejwttoken 误写进 oauth access token；
   // 但 Z.ai 的 business JWT 本身就是合法 Bearer token，不能套用这个 stale-token 防御。
   if (family === "bigmodel" && zcodeJwtToken && token === zcodeJwtToken) {
     return { kind: "unavailable", reason: "coding_plan_not_connected" };

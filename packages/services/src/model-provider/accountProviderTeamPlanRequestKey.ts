@@ -18,7 +18,7 @@ import { readApiJson } from "#src/providers/api/apiJson.js";
 import type { RemoteCustomerInfo } from "./accountProviderApiTypes.js";
 
 const log = createServiceLogger("account-provider-team-plan-request-key");
-const ZCODE_JWT_TOKEN_KEY = "zcodejwttoken";
+const ZCODE_JWT_TOKEN_KEY = "qcodejwttoken";
 const TEAM_PLAN_RUNTIME_KEY_REQUEST_TIMEOUT_MS = 15_000;
 
 interface TeamPlanRequestKeyDependencies {

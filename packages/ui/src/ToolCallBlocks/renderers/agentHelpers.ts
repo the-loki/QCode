@@ -163,7 +163,7 @@ function readAgentColorFromRecord(value: Record<string, unknown> | null): string
 export function readBackgroundAgentInfo(toolCall: AgentToolCall) {
   const raw = isPlainRecord(toolCall.raw) ? toolCall.raw : null;
   const meta = raw && isPlainRecord(raw._meta) ? raw._meta : null;
-  const zcode = meta && isPlainRecord(meta.zcode) ? meta.zcode : null;
+  const zcode = meta && isPlainRecord(meta.qcode) ? meta.qcode : null;
   const zcodeBackgroundAgent =
     zcode && isPlainRecord(zcode.backgroundAgent) ? zcode.backgroundAgent : null;
   const taskNotification =

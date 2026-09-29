@@ -1,7 +1,7 @@
 import { BIGMODEL_PROVIDER_ID } from "@zcode/shared";
 
 const ACTIVE_PROVIDER_KEY = "oauth:active_provider";
-const ZCODE_JWT_TOKEN_KEY = "zcodejwttoken";
+const ZCODE_JWT_TOKEN_KEY = "qcodejwttoken";
 
 interface BigModelStartPlanZcodeJwtCredentialService {
   load(key: string): Promise<string | null>;

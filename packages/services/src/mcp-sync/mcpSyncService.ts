@@ -41,10 +41,10 @@ interface UserMcpRecord {
 }
 
 const ZCODE_MCP_DESCRIPTOR: DirectoryMcpDescriptor = {
-  source: "zcode",
-  directorySource: "zcode",
-  userConfigDirSegments: [".zcode", "cli"],
-  workspaceConfigDirSegments: [".zcode"],
+  source: "qcode",
+  directorySource: "qcode",
+  userConfigDirSegments: [".qcode", "cli"],
+  workspaceConfigDirSegments: [".qcode"],
   fileName: "config.json",
   configKeyName: "mcp.servers",
 };
@@ -603,7 +603,7 @@ async function importMcpServers(params: {
         name: server.name,
         config: rewrittenConfig,
         enabled: server.enabled,
-        source: "zcode",
+        source: "qcode",
         path: targetPath,
       });
       results.push({ name: server.name, status: "synced", path: targetPath });

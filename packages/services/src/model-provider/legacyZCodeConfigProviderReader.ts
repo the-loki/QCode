@@ -133,7 +133,7 @@ interface ZCodeOpenCodeProviderConfig {
   createdAt?: number;
   updatedAt?: number;
   models?: Record<string, ZCodeOpenCodeModelConfig>;
-  zcode?: ZCodeProviderConfigExtension;
+  qcode?: ZCodeProviderConfigExtension;
   [key: string]: unknown;
 }
 
@@ -179,7 +179,7 @@ interface ZCodeOpenCodeModelConfig {
   priority?: number;
   modified?: boolean;
   deleted?: boolean;
-  zcode?: ZCodeModelConfigExtension;
+  qcode?: ZCodeModelConfigExtension;
   [key: string]: unknown;
 }
 
@@ -287,7 +287,7 @@ const zcodeOpenCodeModelConfigSchema: z.ZodType<ZCodeOpenCodeModelConfig> = z
     priority: z.number().finite().optional(),
     modified: z.boolean().optional(),
     deleted: z.boolean().optional(),
-    zcode: zcodeModelConfigExtensionSchema.optional(),
+    qcode: zcodeModelConfigExtensionSchema.optional(),
   })
   .passthrough();
 
@@ -341,7 +341,7 @@ const zcodeOpenCodeProviderConfigSchema: z.ZodType<ZCodeOpenCodeProviderConfig> 
     createdAt: z.number().optional(),
     updatedAt: z.number().optional(),
     models: z.record(z.string(), zcodeOpenCodeModelConfigSchema).optional(),
-    zcode: zcodeProviderConfigExtensionSchema.optional(),
+    qcode: zcodeProviderConfigExtensionSchema.optional(),
   })
   .passthrough();
 
@@ -421,7 +421,7 @@ function resolveOpenCodeProviderDefaultKind(
   }
   return (
     provider.defaultKind ??
-    provider.zcode?.defaultKind ??
+    provider.qcode?.defaultKind ??
     inferModelProviderKindFromOpenCodeProvider(provider)
   );
 }
@@ -516,7 +516,7 @@ function resolveOpenCodeProviderEndpoints(
       },
     };
   }
-  return provider.endpoints ?? provider.zcode?.endpoints ?? {};
+  return provider.endpoints ?? provider.qcode?.endpoints ?? {};
 }
 
 function stripZCodePrefixedProviderMappings(
@@ -526,7 +526,7 @@ function stripZCodePrefixedProviderMappings(
     return undefined;
   }
   const entries = Object.entries(providerMappings ?? {}).filter(
-    ([key]) => !key.toLowerCase().startsWith("zcode"),
+    ([key]) => !key.toLowerCase().startsWith("qcode"),
   );
   return Object.fromEntries(entries);
 }
@@ -538,8 +538,8 @@ function openCodeReasoningToModelReasoning(
   if (!options.preferOpenCodeFields && model.reasoningSpec) {
     return stripModelProviderReasoningPatches(model.reasoningSpec);
   }
-  if (!options.preferOpenCodeFields && model.zcode?.reasoning) {
-    return stripModelProviderReasoningPatches(model.zcode.reasoning);
+  if (!options.preferOpenCodeFields && model.qcode?.reasoning) {
+    return stripModelProviderReasoningPatches(model.qcode.reasoning);
   }
   const reasoning = model.reasoning;
   if (reasoning === undefined || reasoning === false) {
@@ -565,8 +565,8 @@ function openCodeModelToModelProviderModel(
   providerDefaultKind: ModelProviderKind,
   options: { preferOpenCodeFields: boolean },
 ): ModelProviderModelConfig {
-  const zcode = options.preferOpenCodeFields ? undefined : model.zcode;
-  const zcodeExtensions = model.zcode;
+  const zcode = options.preferOpenCodeFields ? undefined : model.qcode;
+  const zcodeExtensions = model.qcode;
   const contextWindow =
     readPositiveNumber(model.limit?.context) ?? readPositiveNumber(model.contextWindow);
   const maxOutputTokens =
@@ -642,7 +642,7 @@ function openCodeProviderToModelProviderConfig(
   providerId: string,
   provider: ZCodeOpenCodeProviderConfig,
 ): ModelProviderConfig {
-  const zcode = provider.zcode;
+  const zcode = provider.qcode;
   const preferOpenCodeFields = hasOpenCodeProviderRuntimeFields(provider);
   const configuredDefaultKind = resolveOpenCodeProviderDefaultKind(provider);
   const options = provider.options ?? {};

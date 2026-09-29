@@ -52,7 +52,7 @@ export const BUILTIN_WORKFLOW_COMMAND: CustomCommandContent = {
     rootPath: "builtin:",
     scope: "system",
     skills: [DYNAMIC_WORKFLOW_SKILL_NAME],
-    source: "zcode",
+    source: "qcode",
   },
   sizeBytes: Buffer.byteLength(BUILTIN_WORKFLOW_COMMAND_BODY),
   truncated: false,

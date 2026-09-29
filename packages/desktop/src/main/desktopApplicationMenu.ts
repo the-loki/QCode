@@ -19,7 +19,7 @@ import {
   HELP_TOGGLE_DEV_TOOLS_MENU_ID,
 } from "./desktopCommandHandlers.js";
 
-const HELP_ZCODE_ENDPOINT_PRODUCTION_MENU_ID = "help.zcode-endpoint.production";
+const HELP_ZCODE_ENDPOINT_PRODUCTION_MENU_ID = "help.qcode-endpoint.production";
 
 export function getDesktopMenuLabel(
   locale: Locale,

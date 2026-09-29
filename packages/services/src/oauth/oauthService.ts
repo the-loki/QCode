@@ -37,7 +37,7 @@ import {
 /** OAuth 超时时间（5 分钟） */
 const OAUTH_TIMEOUT_MS = 5 * 60 * 1000;
 const COMPLETED_POLLING_STATE_GRACE_MS = 30 * 1000;
-const ZCODE_JWT_TOKEN_KEY = "zcodejwttoken";
+const ZCODE_JWT_TOKEN_KEY = "qcodejwttoken";
 const log = (...args: unknown[]) =>
   console.log(formatLogPrefix("oauthService", process.pid), ...args);
 const serviceLog = createServiceLogger("oauthService");
@@ -257,9 +257,9 @@ export class OAuthService implements IOAuthService {
 
     if (activeProvider === ZAI_PROVIDER_ID) {
       if (!zcodeJwtToken) {
-        // sidebar 登录入口之前只看缓存 user_info，会把“缺少 zcodejwttoken”的状态误判成已登录。
-        // 这里补充 zcodejwttoken 门槛，确保没有后端 JWT 时统一按未登录处理。
-        log("restoreCachedSession skipped: missing zcodejwttoken:", activeProvider);
+        // sidebar 登录入口之前只看缓存 user_info，会把“缺少 qcodejwttoken”的状态误判成已登录。
+        // 这里补充 qcodejwttoken 门槛，确保没有后端 JWT 时统一按未登录处理。
+        log("restoreCachedSession skipped: missing qcodejwttoken:", activeProvider);
         return { status: "signed-out" };
       }
     }
@@ -418,7 +418,7 @@ export class OAuthService implements IOAuthService {
     if (inactiveProvider) {
       await assertCurrent();
       // ZAI 与 BigModel 是互斥身份域。切换 provider 时必须先清旧 provider，
-      // 再保存当前 token；反序会让 clearProvider 误删共享的 zcodejwttoken。
+      // 再保存当前 token；反序会让 clearProvider 误删共享的 qcodejwttoken。
       await this.repo.clearProvider(inactiveProvider);
     }
     await assertCurrent();

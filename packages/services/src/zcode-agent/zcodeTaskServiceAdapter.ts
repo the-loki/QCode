@@ -244,7 +244,7 @@ function formatZCodeAgentLogDate(now: Date): string {
 
 function resolveZCodeAgentCurrentLogFilePath(now = new Date()): string {
   const configuredLogDir = process.env.ZCODE_LOG_DIR?.trim();
-  const logDir = configuredLogDir || join(homedir(), ".zcode", "cli", "log");
+  const logDir = configuredLogDir || join(homedir(), ".qcode", "cli", "log");
   return join(logDir, `zcode-${formatZCodeAgentLogDate(now)}.jsonl`);
 }
 
@@ -2843,7 +2843,7 @@ export function createZCodeTaskServiceAdapter(
 
     async getTaskSessionFilePath(params) {
       return {
-        path: `${params.workspacePath}/${params.taskId}.zcode-session`,
+        path: `${params.workspacePath}/${params.taskId}.qcode-session`,
         exists: false,
       };
     },
@@ -5396,7 +5396,7 @@ function apiRetryFromSessionInfoPayload(
     return runtimeRetry;
   }
 
-  const metaRetry = normalizeZCodeApiRetryStatus(asRecord(asRecord(payload._meta).zcode).apiRetry);
+  const metaRetry = normalizeZCodeApiRetryStatus(asRecord(asRecord(payload._meta).qcode).apiRetry);
   if (metaRetry !== undefined) {
     return metaRetry;
   }

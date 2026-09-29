@@ -1766,7 +1766,7 @@ function mcpRequestMeta(request: McpCallToolRequest): Record<string, unknown> {
   };
   return {
     ...requestContext,
-    "com.zcode/request-context": requestContext,
+    "com.qcode/request-context": requestContext,
   };
 }
 

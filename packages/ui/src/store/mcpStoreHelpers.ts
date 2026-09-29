@@ -90,7 +90,7 @@ export function makeServerId(
   directorySource?: NonNullable<NativeMcpServerRecord["location"]>["source"],
 ): string {
   const sourceKey =
-    source === "zcodeagentmcp" && directorySource && directorySource !== "zcode"
+    source === "zcodeagentmcp" && directorySource && directorySource !== "qcode"
       ? `${source}-${directorySource}`
       : source;
   return `${sourceKey}-${toIdKey(toScopeKey(projectPath))}-${toIdKey(name)}`;

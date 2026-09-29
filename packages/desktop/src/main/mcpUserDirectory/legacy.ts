@@ -202,7 +202,7 @@ function buildLegacyCommonMcpStorageCandidates(request?: MigrateLegacyCommonMcpR
   const appData = process.env.APPDATA ?? join(homedir(), "AppData", "Roaming");
 
   // 优先从老的 store.json 读取 common MCP 配置
-  candidates.push(join(appData, "ai.z.zcode", "store.json"));
+  candidates.push(join(appData, "ai.z.qcode", "store.json"));
 
   candidates.push(
     join(localAppData, "ai.z.work", "EBWebView", "Default", "Local Storage", "leveldb"),

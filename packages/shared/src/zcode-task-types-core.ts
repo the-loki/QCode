@@ -880,7 +880,7 @@ export interface ZCodeSessionInfoUpdate {
    */
   apiRetry?: ZCodeApiRetryStatus | null;
   /**
-   * zcode-cli 通过兼容 session_info_update._meta.zcode.target 投影的 /goal 状态补丁。
+   * zcode-cli 通过兼容 session_info_update._meta.qcode.target 投影的 /goal 状态补丁。
    * `undefined` 表示本次没有 target 变化；`target: null` 表示清空。
    */
   target?: ZCodeTaskGoalChangedPatch;
