@@ -24,6 +24,7 @@
     "./workspace-hook-trust-store-file": "./src/workspace-hook-trust-store-file.ts"
   },
   "scripts": {
+    "test": "vitest run",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix"
   },
@@ -32,6 +33,7 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^3.2.7"
   }
 }

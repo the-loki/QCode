@@ -760,7 +760,7 @@ export function BotsDialog({
           ...bot,
           name: "",
           ...(provider === "webhook"
-            ? { webhookAuthHeaderName: "x-zcode-bot-secret" }
+            ? { webhookAuthHeaderName: "x-qcode-bot-secret" }
             : {}),
         });
       } catch (error) {
