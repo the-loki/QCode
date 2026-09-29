@@ -5,7 +5,7 @@ import {
   ZCODE_RPC_CLIENT_MODE_HEADER,
   ZCODE_RPC_HOST_CAPABILITY_HEADER,
 } from "../src/channels.js";
-import { openRouterAttributionHeaders } from "../src/openrouter-attribution.js";
+import { OPENROUTER_ATTRIBUTION_HEADERS } from "../src/openrouter-attribution.js";
 
 // wire 契约钉:握手串与头名的唯一权威来自这些常量,host/CLI/server 各端共用。
 // 更名(qcode)后防止任何一端回退旧字符串导致链路握手/鉴权失败。
@@ -20,5 +20,5 @@ test("rpc headers use x-qcode-* names", () => {
 });
 
 test("openrouter attribution title uses the QCode brand", () => {
-  assert.equal(openRouterAttributionHeaders["X-OpenRouter-Title"], "QCode");
+  assert.equal(OPENROUTER_ATTRIBUTION_HEADERS["X-OpenRouter-Title"], "QCode");
 });
