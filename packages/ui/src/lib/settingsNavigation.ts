@@ -28,11 +28,11 @@ type SettingsPluginNavigationOrigin = "plugin-store";
 const SETTINGS_SECTION_INTENT_KEY = "qcode-settings-section-intent",
   SETTINGS_USAGE_TAB_INTENT_KEY = "qcode-settings-usage-tab-intent",
   SETTINGS_PLUGIN_TAB_INTENT_KEY = "qcode-settings-plugin-tab-intent",
-  SETTINGS_PLUGIN_ORIGIN_INTENT_KEY = "zcode-settings-plugin-origin-intent",
-  SETTINGS_PLUGIN_SCOPE_KEY_INTENT_KEY = "zcode-settings-plugin-scope-key-intent";
-const SETTINGS_MODEL_PROVIDER_ID_INTENT_KEY = "zcode-settings-model-provider-id-intent";
+  SETTINGS_PLUGIN_ORIGIN_INTENT_KEY = "qcode-settings-plugin-origin-intent",
+  SETTINGS_PLUGIN_SCOPE_KEY_INTENT_KEY = "qcode-settings-plugin-scope-key-intent";
+const SETTINGS_MODEL_PROVIDER_ID_INTENT_KEY = "qcode-settings-model-provider-id-intent";
 const SETTINGS_SECTION_INTENT_EVENT = "qcode:settings-section-intent",
-  SETTINGS_LAST_SECTION_STORAGE_KEY = "zcode-settings-last-section";
+  SETTINGS_LAST_SECTION_STORAGE_KEY = "qcode-settings-last-section";
 const HIDDEN_SETTINGS_SECTIONS = new Set<SettingsSectionId>([
   // 产品语义：定时任务是 workspace 主视图，不能再作为设置页分区出现。
   // 注意：hooks 已是正式设置页分区，不在此列。

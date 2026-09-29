@@ -5,7 +5,7 @@
  * 替代直接调用 window.qcode。
  */
 import { createContext, useContext, useCallback, type ReactNode } from "react";
-import type { IPlatformService, RemoteTarget } from "@zcode/shared";
+import type { IPlatformService, RemoteTarget } from "@qcode/shared";
 
 const PlatformContext = createContext<IPlatformService | null>(null);
 

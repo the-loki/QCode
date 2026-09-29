@@ -12,7 +12,7 @@ import {
   type TabId,
   type TabState,
   type WorkspacePurpose,
-} from "@zcode/shared";
+} from "@qcode/shared";
 import {
   persistWorkspaceExpandedPreference,
   readWorkspaceExpansionState,

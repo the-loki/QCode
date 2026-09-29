@@ -7,7 +7,7 @@ import pdfIcon from "@/assets/plugin-icons/pdf.png";
 import presentationsIcon from "@/assets/plugin-icons/presentations.png";
 import spreadsheetsIcon from "@/assets/plugin-icons/spreadsheets.png";
 import browserUseIcon from "@/assets/plugin-icons/browser-use.png";
-import zcodeCuaIcon from "@/assets/plugin-icons/zcode-cua.png";
+import qcodeCuaIcon from "@/assets/plugin-icons/qcode-cua.png";
 import type { DraftSuggestedPromptItem } from "@/v4/draftSuggestedPromptItems.js";
 type FeatureRecommendedPrompt = DraftSuggestedPromptItem & {
   mode: "office" | "coding";
@@ -138,7 +138,7 @@ export const featureSuggestedPrompts: FeatureRecommendedPrompt[] = [
   {
     id: "feature-recvvsS2usyGu7",
     mode: "office",
-    iconUrl: zcodeCuaIcon,
+    iconUrl: qcodeCuaIcon,
     iconStyle: "plugin",
     label: {
       cn: "帮我设置一个闲时任务，体验网站的完整用户旅程",
@@ -253,7 +253,7 @@ export const featureSuggestedPrompts: FeatureRecommendedPrompt[] = [
   {
     id: "feature-recvvsPdvclWR1",
     mode: "office",
-    iconUrl: zcodeCuaIcon,
+    iconUrl: qcodeCuaIcon,
     iconStyle: "plugin",
     label: {
       cn: "帮我把下载文件夹里的截图按月份批量归档",

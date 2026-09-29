@@ -1,4 +1,4 @@
-import { formatLogPrefix } from "@zcode/shared";
+import { formatLogPrefix } from "@qcode/shared";
 
 export type LogLevel = "debug" | "info" | "warn" | "error";
 
@@ -24,9 +24,9 @@ function isRendererLoggingDisabled(): boolean {
   return (
     (
       globalThis as typeof globalThis & {
-        __ZCODE_RENDERER_DISABLE_LOGGING__?: boolean;
+        __QCODE_RENDERER_DISABLE_LOGGING__?: boolean;
       }
-    ).__ZCODE_RENDERER_DISABLE_LOGGING__ === true
+    ).__QCODE_RENDERER_DISABLE_LOGGING__ === true
   );
 }
 

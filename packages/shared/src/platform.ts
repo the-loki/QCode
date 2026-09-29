@@ -55,7 +55,7 @@ export type BrowserTabResidencyState =
   | "restoring";
 
 /** 仅用于创建尚未提交首个 navigation entry 的 residency restore guest。 */
-export const BROWSER_VIEW_RESTORE_BOOTSTRAP_URL = "zcode-browser-restore://pending";
+export const BROWSER_VIEW_RESTORE_BOOTSTRAP_URL = "qcode-browser-restore://pending";
 
 /** Renderer 上报 tab shell 的展示事实；windowId 必须由 main 绑定可信 IPC sender。 */
 export interface BrowserViewResidencyReportPayload {
@@ -93,7 +93,7 @@ export interface BrowserViewCloseTabRequest {
   sessionId: string;
 }
 
-export const LOCAL_MEDIA_PREVIEW_SCHEME = "zcode-media";
+export const LOCAL_MEDIA_PREVIEW_SCHEME = "qcode-media";
 
 export function buildLocalMediaPreviewUrl(path: string): string {
   const url = new URL(`${LOCAL_MEDIA_PREVIEW_SCHEME}://local/preview`);
@@ -317,7 +317,7 @@ export interface SSHConfigAliasOption {
   source?: string;
 }
 
-export interface ZCodeStdioTapDevState {
+export interface QCodeStdioTapDevState {
   enabled: boolean;
   visible: boolean;
   logDir: string;
@@ -480,11 +480,11 @@ export const DesktopCommandIds = {
   ExportLogs: "exportLogs",
   ToggleDevTools: "toggleDevTools",
   OpenResourceManager: "openResourceManager",
-  ToggleZCodeStdioTapDevProxy: "toggleZCodeStdioTapDevProxy",
-  SetZCodeEndpointProduction: "setZCodeEndpointProduction",
-  SetZCodeEndpointTest: "setZCodeEndpointTest",
-  SetZCodeEndpointCustom: "setZCodeEndpointCustom",
-  ResetZCodeEndpoint: "resetZCodeEndpoint",
+  ToggleQCodeStdioTapDevProxy: "toggleQCodeStdioTapDevProxy",
+  SetQCodeEndpointProduction: "setQCodeEndpointProduction",
+  SetQCodeEndpointTest: "setQCodeEndpointTest",
+  SetQCodeEndpointCustom: "setQCodeEndpointCustom",
+  ResetQCodeEndpoint: "resetQCodeEndpoint",
   ClearAllData: "clearAllData",
   ClearCodingPlanWebviewStorage: "clearCodingPlanWebviewStorage",
   GetCuaOsSupport: "getCuaOsSupport",
@@ -646,7 +646,7 @@ export interface IPlatformService {
   /** 使用系统默认应用打开本地文件；普通 Web 平台返回 unsupported。 */
   openExternalFile?(path: string): Promise<{ success: boolean; error?: string }>;
 
-  /** 打开 ZCode Computer Use 的完整权限引导。Desktop only。 */
+  /** 打开 QCode Computer Use 的完整权限引导。Desktop only。 */
   openCuaPermissionOnboarding?(
     options?: OpenCuaPermissionOnboardingOptions,
   ): Promise<CuaAccessibilitySettingsResult>;
@@ -885,7 +885,7 @@ export interface IPlatformService {
   }>;
 
   /** 开发环境 stdio tap proxy 开关状态；非桌面平台可不实现 */
-  getZCodeStdioTapDevState?(): Promise<ZCodeStdioTapDevState>;
+  getQCodeStdioTapDevState?(): Promise<QCodeStdioTapDevState>;
 
   /** 是否为本地开发运行形态；桌面端用 !app.isPackaged 注入，Web 端可省略。 */
   isLocalDevelopmentRuntime?: boolean;

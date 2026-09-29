@@ -5,8 +5,8 @@ import type {
   OAuthProviderMeta,
   OAuthStartResponse,
   UserInfo,
-} from "@zcode/shared";
-import { ServiceChannels } from "@zcode/shared";
+} from "@qcode/shared";
+import { ServiceChannels } from "@qcode/shared";
 import { createServiceDescriptor } from "../descriptors.js";
 
 /**

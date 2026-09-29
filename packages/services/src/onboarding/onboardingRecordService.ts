@@ -4,13 +4,13 @@ import {
   onboardingDecisionSchema,
   onboardingRecordEntrySchema,
   onboardingRecordFileSchema,
-} from "@zcode/shared";
-import { appSettingsOccupationEnum } from "@zcode/shared";
+} from "@qcode/shared";
+import { appSettingsOccupationEnum } from "@qcode/shared";
 import type {
   OnboardingRecordEntry,
   OnboardingRecordEntryInput,
   OnboardingRecordFile,
-} from "@zcode/shared";
+} from "@qcode/shared";
 import { atomicWriteText } from "../fs/atomicFileUtils.js";
 import { getAppConfigDir } from "../paths.js";
 import { createServiceLogger } from "../logger/serviceLogger.js";

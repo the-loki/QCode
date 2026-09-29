@@ -2,7 +2,7 @@ import { access, cp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promis
 import { dirname, join } from "node:path";
 
 export const DEV_ELECTRON_PROTOCOL_SCHEME = "qcode";
-export const DEV_ELECTRON_APP_NAME = "ZCode Dev";
+export const DEV_ELECTRON_APP_NAME = "QCode Dev";
 export const DEV_ELECTRON_APP_BUNDLE_ID = "dev.qcode.app.development";
 // 副本布局版本，见 prepareDevElectronAppBundle 中的指纹说明。
 export const DEV_ELECTRON_BUNDLE_FORMAT = 2;
@@ -37,8 +37,8 @@ function appendProtocolDeclaration(plist) {
 }
 
 /**
- * 为 macOS 本地 Dev runtime 写入产品身份和 zcode URL scheme。
- * raw Electron 的 Info.plist 没有 CFBundleURLTypes，系统只能把 zcode 交给
+ * 为 macOS 本地 Dev runtime 写入产品身份和 qcode URL scheme。
+ * raw Electron 的 Info.plist 没有 CFBundleURLTypes，系统只能把 qcode 交给
  * com.github.Electron；这里仅修改启动副本，避免污染 node_modules 中的 Electron。
  */
 export function patchDevElectronInfoPlist(plist) {

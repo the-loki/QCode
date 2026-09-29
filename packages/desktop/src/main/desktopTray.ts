@@ -6,7 +6,7 @@ import {
   getDesktopMenuMessage,
   type DesktopCommandId,
   type Locale,
-} from "@zcode/shared";
+} from "@qcode/shared";
 
 let desktopTray: Tray | null = null;
 let rebuildDesktopTrayContextMenu: (() => void) | null = null;
@@ -58,7 +58,7 @@ export function createWindowsDesktopTray(options: {
     desktopTray?.setContextMenu(
       Menu.buildFromTemplate([
         {
-          label: getLabel(desktopMenuMessageIds.trayOpenZCode),
+          label: getLabel(desktopMenuMessageIds.trayOpenQCode),
           click: showTrayWindow,
         },
         { type: "separator" },

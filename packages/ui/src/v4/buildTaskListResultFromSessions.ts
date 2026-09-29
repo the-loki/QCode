@@ -1,9 +1,9 @@
 // 左侧列表投影：tasks-index 决定持久行集合与 membership，sessions-index 只补实时 activity/detail。
 // 这里保持纯函数，供 Project/Timeline/Pinned/Archived/Grouped 共用同一字段权威。
-import type { ZCodeTaskMeta } from "@zcode/shared";
-import { matchesTaskListMembershipKind } from "@zcode/shared/zcode-protocol-v4";
+import type { QCodeTaskMeta } from "@qcode/shared";
+import { matchesTaskListMembershipKind } from "@qcode/shared/qcode-protocol-v4";
 import { buildTaskEntityKey } from "@/lib/taskQueryCache.js";
-import { compareZCodeTaskListItems } from "@/lib/taskListOrdering.js";
+import { compareQCodeTaskListItems } from "@/lib/taskListOrdering.js";
 import { attachTaskListRowActivity, getTaskListRowActivity } from "@/v4/taskListRowActivity.js";
 
 type TaskListKind = "pinned" | "archived" | "timeline" | "active";
@@ -11,9 +11,9 @@ type TaskListSortBy = "created" | "updated";
 
 interface BuildTaskListParams {
   /** tasks-index active/pinned/archived 三个持久分区的 task 行并集。 */
-  taskIndexItems: ZCodeTaskMeta[];
+  taskIndexItems: QCodeTaskMeta[];
   /** sessions-index 派生的会话 activity/detail；只覆盖命中的持久行。 */
-  sessions: ZCodeTaskMeta[];
+  sessions: QCodeTaskMeta[];
   kind: TaskListKind;
   /** 服务端权威 pin/archive id 集（tasks-index.sqlite 持久化）。 */
   pinnedIds: ReadonlySet<string>;
@@ -32,7 +32,7 @@ interface BuildTaskListParams {
   /** taskId → terminal status（tasks-index 历史终态；只补冷启动 stored summary）。 */
   terminalStatusByTaskId?: ReadonlyMap<
     string,
-    Extract<ZCodeTaskMeta["status"], "completed" | "error">
+    Extract<QCodeTaskMeta["status"], "completed" | "error">
   >;
   /** taskId → 旧 task-index 手动标题；只覆盖 titleOverridden!==true 的 session meta。 */
   titleOverrideByTaskId?: ReadonlyMap<string, string>;
@@ -41,14 +41,14 @@ interface BuildTaskListParams {
 }
 
 interface BuildTaskListResult {
-  items: ZCodeTaskMeta[];
+  items: QCodeTaskMeta[];
   total: number;
 }
 
 function mergeTaskIndexRowWithSession(
-  taskIndexTask: ZCodeTaskMeta,
-  sessionTask: ZCodeTaskMeta,
-): ZCodeTaskMeta {
+  taskIndexTask: QCodeTaskMeta,
+  sessionTask: QCodeTaskMeta,
+): QCodeTaskMeta {
   const activity = getTaskListRowActivity(sessionTask);
   const sessionTitle = sessionTask.title.trim();
   const sessionTitleWins =
@@ -58,7 +58,7 @@ function mergeTaskIndexRowWithSession(
     sessionTask.titleOverridden === true || taskIndexTask.titleOverridden === true
       ? true
       : undefined;
-  const merged: ZCodeTaskMeta = {
+  const merged: QCodeTaskMeta = {
     ...taskIndexTask,
     title: sessionTitleWins ? sessionTask.title : taskIndexTask.title,
     titleOverridden,
@@ -78,9 +78,9 @@ function mergeTaskIndexRowWithSession(
  * 不会进入持久列表，新建短窗口由既有 optimistic/live overlay 负责。
  */
 export function mergeTaskIndexRowsWithSessions(params: {
-  taskIndexItems: ZCodeTaskMeta[];
-  sessions: ZCodeTaskMeta[];
-}): ZCodeTaskMeta[] {
+  taskIndexItems: QCodeTaskMeta[];
+  sessions: QCodeTaskMeta[];
+}): QCodeTaskMeta[] {
   const sessionByEntityKey = new Map(
     params.sessions.map((session) => [buildTaskEntityKey(session), session]),
   );
@@ -92,24 +92,24 @@ export function mergeTaskIndexRowsWithSessions(params: {
 
 /** unreadAt join：map 已加载时以 tasks-index 为准，未加载时不动原 meta，避免首帧闪烁。 */
 export function joinTaskListUnreadAt(
-  tasks: ZCodeTaskMeta[],
+  tasks: QCodeTaskMeta[],
   unreadAtByTaskId: ReadonlyMap<string, number> | undefined,
-): ZCodeTaskMeta[] {
+): QCodeTaskMeta[] {
   return joinTaskListMembershipMeta(tasks, { unreadAtByTaskId });
 }
 
 function joinTaskListMembershipMeta(
-  tasks: ZCodeTaskMeta[],
+  tasks: QCodeTaskMeta[],
   params: {
     unreadAtByTaskId?: ReadonlyMap<string, number>;
     terminalStatusByTaskId?: ReadonlyMap<
       string,
-      Extract<ZCodeTaskMeta["status"], "completed" | "error">
+      Extract<QCodeTaskMeta["status"], "completed" | "error">
     >;
     titleOverrideByTaskId?: ReadonlyMap<string, string>;
     cronAutomationIdByTaskId?: ReadonlyMap<string, string>;
   },
-): ZCodeTaskMeta[] {
+): QCodeTaskMeta[] {
   const {
     unreadAtByTaskId,
     terminalStatusByTaskId,
@@ -189,7 +189,7 @@ export function buildTaskListResult(params: BuildTaskListParams): BuildTaskListR
     if (query && !task.title.toLocaleLowerCase().includes(query)) return false;
     return true;
   });
-  filtered.sort((a, b) => compareZCodeTaskListItems(a, b, params.sortBy));
+  filtered.sort((a, b) => compareQCodeTaskListItems(a, b, params.sortBy));
   const total = filtered.length;
   const items = params.limit === undefined ? filtered : filtered.slice(0, params.limit);
   return { items, total };

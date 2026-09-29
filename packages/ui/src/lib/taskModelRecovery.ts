@@ -1,6 +1,6 @@
-import type { ZCodeConfigOption, ZCodeTaskMeta } from "@zcode/shared";
-import { getZCodeAgentModeSelectOptions } from "@zcode/shared";
-import { decodeCustomModelValue, encodeCustomModelValue } from "@/lib/zcodeCustomModelValue.js";
+import type { QCodeConfigOption, QCodeTaskMeta } from "@qcode/shared";
+import { getQCodeAgentModeSelectOptions } from "@qcode/shared";
+import { decodeCustomModelValue, encodeCustomModelValue } from "@/lib/qcodeCustomModelValue.js";
 
 function parseProviderQualifiedModel(
   model: string,
@@ -47,7 +47,7 @@ function resolveGlmRecoveredTaskModelValue(taskModel: string | undefined): strin
 }
 
 function resolveRecoveredTaskModelValue(
-  taskMeta: Pick<ZCodeTaskMeta, "provider" | "model">,
+  taskMeta: Pick<QCodeTaskMeta, "provider" | "model">,
 ): string | null {
   const normalizedTaskModel = taskMeta.model?.trim();
   if (!normalizedTaskModel || isSyntheticModelPlaceholder(normalizedTaskModel)) {
@@ -67,7 +67,7 @@ function resolveModelOptionName(modelValue: string): string {
   return customModel?.modelName?.trim() || providerQualifiedModel?.modelName || modelValue;
 }
 
-function ensureModelOptionValue(option: ZCodeConfigOption, modelValue: string): ZCodeConfigOption {
+function ensureModelOptionValue(option: QCodeConfigOption, modelValue: string): QCodeConfigOption {
   const options = option.options ?? [];
   const hasOption = options.some((candidate) => candidate.value === modelValue);
   if (hasOption && option.currentValue === modelValue) {
@@ -89,7 +89,7 @@ function ensureModelOptionValue(option: ZCodeConfigOption, modelValue: string): 
   };
 }
 
-function createRecoveredModelOption(modelValue: string): ZCodeConfigOption {
+function createRecoveredModelOption(modelValue: string): QCodeConfigOption {
   return {
     category: "model",
     currentValue: modelValue,
@@ -105,18 +105,18 @@ function createRecoveredModelOption(modelValue: string): ZCodeConfigOption {
   };
 }
 
-function createRecoveredModeOption(modeValue: string): ZCodeConfigOption {
+function createRecoveredModeOption(modeValue: string): QCodeConfigOption {
   return {
     category: "mode",
     currentValue: modeValue,
     id: "mode",
     name: "Mode",
-    options: getZCodeAgentModeSelectOptions(),
+    options: getQCodeAgentModeSelectOptions(),
     type: "select",
   };
 }
 
-function createRecoveredThoughtLevelOption(thoughtLevel: string): ZCodeConfigOption {
+function createRecoveredThoughtLevelOption(thoughtLevel: string): QCodeConfigOption {
   return {
     category: "thought_level",
     currentValue: thoughtLevel,
@@ -133,9 +133,9 @@ function createRecoveredThoughtLevelOption(thoughtLevel: string): ZCodeConfigOpt
 }
 
 function ensureSelectOptionCurrentValue(
-  option: ZCodeConfigOption,
+  option: QCodeConfigOption,
   value: string,
-): ZCodeConfigOption {
+): QCodeConfigOption {
   const options = option.options ?? [];
   const hasOption = options.some((candidate) => candidate.value === value);
   if (hasOption && option.currentValue === value) {
@@ -161,9 +161,9 @@ function mergeRecoveredTaskModelConfigOptions({
   taskMeta,
   configOptions,
 }: {
-  taskMeta: Pick<ZCodeTaskMeta, "provider" | "model">;
-  configOptions: readonly ZCodeConfigOption[];
-}): ZCodeConfigOption[] | null {
+  taskMeta: Pick<QCodeTaskMeta, "provider" | "model">;
+  configOptions: readonly QCodeConfigOption[];
+}): QCodeConfigOption[] | null {
   const recoveredModelValue = resolveRecoveredTaskModelValue(taskMeta);
   if (!recoveredModelValue) {
     return null;
@@ -198,10 +198,10 @@ export function resolveTaskRestorePreloadConfigOptions({
   taskMeta,
   cachedTaskConfigOptions,
 }: {
-  taskMeta: Pick<ZCodeTaskMeta, "provider" | "model"> &
-    Partial<Pick<ZCodeTaskMeta, "mode" | "thoughtLevel">>;
-  cachedTaskConfigOptions?: readonly ZCodeConfigOption[];
-}): ZCodeConfigOption[] {
+  taskMeta: Pick<QCodeTaskMeta, "provider" | "model"> &
+    Partial<Pick<QCodeTaskMeta, "mode" | "thoughtLevel">>;
+  cachedTaskConfigOptions?: readonly QCodeConfigOption[];
+}): QCodeConfigOption[] {
   let cachedOptions = [...(cachedTaskConfigOptions ?? [])];
   const recoveredOptions = mergeRecoveredTaskModelConfigOptions({
     taskMeta,

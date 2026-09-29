@@ -2054,11 +2054,11 @@ const zhCN: Record<string, string> = {
   "settings.toolGroupingChanges": "分组文件更改",
   "settings.toolGroupingChangesDescription":
     "将连续的 Write、Edit 和 ApplyPatch 调用聚合为 Changes 分组。",
-  "settings.zcodeInteractionBehavior": "交互行为",
-  "settings.zcodeInteractionBehaviorDescription":
+  "settings.qcodeInteractionBehavior": "交互行为",
+  "settings.qcodeInteractionBehaviorDescription":
     "在 QCode 运行时将后续操作加入队列，或引导至下一轮工具调用后运行。",
-  "settings.zcodeInteractionBehavior.option.queue": "队列",
-  "settings.zcodeInteractionBehavior.option.guide": "引导",
+  "settings.qcodeInteractionBehavior.option.queue": "队列",
+  "settings.qcodeInteractionBehavior.option.guide": "引导",
   "settings.askUserQuestionAutoResolution": "提问自动继续",
   "settings.askUserQuestionAutoResolutionDescription":
     "开启后，Agent 提问 5 分钟未回答会自动继续；关闭后，当前和后续提问会一直等待你的回答。",
@@ -3293,8 +3293,8 @@ const zhCN: Record<string, string> = {
   "sidebar.usage.plan.weekly": "每周",
   "sidebar.usage.plan.toolCalls": "工具调用",
   "sidebar.usage.plan.mcp": "QCode MCP",
-  "sidebar.usage.plan.zcodeMcp": "QCode MCP",
-  "sidebar.usage.plan.zcodeMcpDescription": "QCode 预置插件 MCP 每日合计额度",
+  "sidebar.usage.plan.qcodeMcp": "QCode MCP",
+  "sidebar.usage.plan.qcodeMcpDescription": "QCode 预置插件 MCP 每日合计额度",
   "chat.planUsage.title": "套餐用量",
   "chat.planUsage.titleWithPlan": "{plan} 套餐用量",
   "chat.planUsage.providerFallback": "当前供应商",
@@ -3893,7 +3893,7 @@ const zhCN: Record<string, string> = {
   "settings.commands.description":
     "管理 QCode Agent 的 .md 命令文件。命令可通过 /command-name 在聊天中调用。",
   "settings.commands.sourceFilterLabel": "来源筛选",
-  "settings.commands.source.zcodeAgent": "QCode Agent",
+  "settings.commands.source.qcodeAgent": "QCode Agent",
   "settings.commands.add": "新建",
   "settings.commands.addNew": "新建命令",
   "settings.commands.addDescription": "填写命令名称和提示词，保存后返回列表。",
@@ -5614,36 +5614,36 @@ const zhCN: Record<string, string> = {
   "chat.permission.switchMode.placeholder": "实施计划",
 
   // QCode Agent
-  "zcode.unavailable": "AI 代理不可用",
-  "zcode.initFailed": "启动 AI 代理失败",
-  "zcode.error.TASK_OWNED_BY_OTHER_HOST": "该任务正在另一个已连接视图中运行。",
-  "zcode.error.STALE_TASK_OWNER_COMMAND": "该操作属于旧的运行轮次，已忽略。",
-  "zcode.error.NO_ACTIVE_TASK_OWNER": "当前没有可处理该操作的任务所有者。",
-  "zcode.error.OWNER_COMMAND_FAILED": "任务所有者未能完成该操作。",
-  "zcode.error.MEDIA_BUDGET_CURRENT_ATTACHMENT_TOO_LARGE":
+  "qcode.unavailable": "AI 代理不可用",
+  "qcode.initFailed": "启动 AI 代理失败",
+  "qcode.error.TASK_OWNED_BY_OTHER_HOST": "该任务正在另一个已连接视图中运行。",
+  "qcode.error.STALE_TASK_OWNER_COMMAND": "该操作属于旧的运行轮次，已忽略。",
+  "qcode.error.NO_ACTIVE_TASK_OWNER": "当前没有可处理该操作的任务所有者。",
+  "qcode.error.OWNER_COMMAND_FAILED": "任务所有者未能完成该操作。",
+  "qcode.error.MEDIA_BUDGET_CURRENT_ATTACHMENT_TOO_LARGE":
     "当前附件总量过大，请移除部分附件或压缩后重试。",
-  "zcode.error.MEDIA_BUDGET_CURRENT_IMAGE_TOO_LARGE":
+  "qcode.error.MEDIA_BUDGET_CURRENT_IMAGE_TOO_LARGE":
     "当前图片附件过大，请移除部分图片或压缩后重试。",
-  "zcode.error.MEDIA_BUDGET_CURRENT_VIDEO_TOO_LARGE":
+  "qcode.error.MEDIA_BUDGET_CURRENT_VIDEO_TOO_LARGE":
     "当前视频附件过大，请移除部分视频或压缩后重试。",
-  "zcode.error.ZCODE_RUNTIME_MODEL_UNAVAILABLE":
+  "qcode.error.QCODE_RUNTIME_MODEL_UNAVAILABLE":
     "当前使用的模型已不可用，请从当前模型列表中选择一个可用模型后继续。",
-  "zcode.error.ZCODE_BIGMODEL_TEAM_PLAN_MEMBER_REQUIRED":
+  "qcode.error.QCODE_BIGMODEL_TEAM_PLAN_MEMBER_REQUIRED":
     "当前模型不可用，请检查是否已将当前账号添加到项目成员列表",
-  "zcode.error.providerBusiness.1006": "登录状态已失效，请重新登录后再试。",
-  "zcode.error.providerBusiness.1005":
+  "qcode.error.providerBusiness.1006": "登录状态已失效，请重新登录后再试。",
+  "qcode.error.providerBusiness.1005":
     "今日免费计划额度已用完。请升级账户、切换模型，或等待额度恢复。",
-  "zcode.error.providerBusiness.3006": "当前模型不在可用范围内，请切换到允许的模型后重试。",
-  "zcode.error.providerBusiness.3002": "请求过于频繁，请稍后重试。",
-  "zcode.error.providerBusiness.3001": "请求参数错误，请检查输入后重试。",
-  "zcode.error.providerBusiness.3007": "请求被网关安全校验拒绝，请稍后重试或联系支持。",
-  "zcode.error.providerBusiness.3008": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
-  "zcode.error.providerBusiness.3009": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
-  "zcode.error.providerBusiness.3010": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
-  "zcode.error.providerBusiness.3102": "已超过单次最长运行时间，请创建新的闲时任务继续。",
-  "zcode.error.modelSuspiciousEmpty": "模型未返回任何内容。",
-  "zcode.error.providerBusiness.2007": "上游服务暂时不可用，请稍后重试。",
-  "zcode.error.providerBusiness.429": "请求过于频繁，请稍后重试。",
+  "qcode.error.providerBusiness.3006": "当前模型不在可用范围内，请切换到允许的模型后重试。",
+  "qcode.error.providerBusiness.3002": "请求过于频繁，请稍后重试。",
+  "qcode.error.providerBusiness.3001": "请求参数错误，请检查输入后重试。",
+  "qcode.error.providerBusiness.3007": "请求被网关安全校验拒绝，请稍后重试或联系支持。",
+  "qcode.error.providerBusiness.3008": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
+  "qcode.error.providerBusiness.3009": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
+  "qcode.error.providerBusiness.3010": "当前系统繁忙，请切换模型、升级账户，或稍后再试。",
+  "qcode.error.providerBusiness.3102": "已超过单次最长运行时间，请创建新的闲时任务继续。",
+  "qcode.error.modelSuspiciousEmpty": "模型未返回任何内容。",
+  "qcode.error.providerBusiness.2007": "上游服务暂时不可用，请稍后重试。",
+  "qcode.error.providerBusiness.429": "请求过于频繁，请稍后重试。",
 
   // 调试信息栏
   "debugInfo.taskId": "Task ID",

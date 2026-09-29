@@ -1,16 +1,16 @@
-import type { ISkillsService } from "@zcode/services";
+import type { ISkillsService } from "@qcode/services";
 import {
-  normalizeAgentProviderToZCodeAgent,
-  ZCODE_AGENT_PROVIDER,
-  type ZCodeProvider,
-} from "@zcode/shared";
+  normalizeAgentProviderToQCodeAgent,
+  QCODE_AGENT_PROVIDER,
+  type QCodeProvider,
+} from "@qcode/shared";
 import { useSkillStore } from "@/store/skillStore.js";
 
 export async function refreshSharedSkillStoreForWorkspace(params: {
   workspacePath: string | null | undefined;
   workspaceIdentity?: string | null;
   skillsService: ISkillsService;
-  provider?: ZCodeProvider;
+  provider?: QCodeProvider;
 }): Promise<void> {
   const workspacePath = params.workspacePath;
   if (!workspacePath) {
@@ -18,8 +18,8 @@ export async function refreshSharedSkillStoreForWorkspace(params: {
   }
   const skillStore = useSkillStore.getState();
   const normalizedWorkspaceIdentity = params.workspaceIdentity?.trim() || null;
-  const normalizedProvider = normalizeAgentProviderToZCodeAgent(
-    params.provider ?? ZCODE_AGENT_PROVIDER,
+  const normalizedProvider = normalizeAgentProviderToQCodeAgent(
+    params.provider ?? QCODE_AGENT_PROVIDER,
   );
   const refreshes: Promise<void>[] = [];
 
@@ -28,7 +28,7 @@ export async function refreshSharedSkillStoreForWorkspace(params: {
     skillStore.workspaceIdentity === normalizedWorkspaceIdentity &&
     skillStore.loadedWorkspacePath === workspacePath &&
     skillStore.loadedWorkspaceIdentity === normalizedWorkspaceIdentity &&
-    normalizeAgentProviderToZCodeAgent(skillStore.provider) === normalizedProvider &&
+    normalizeAgentProviderToQCodeAgent(skillStore.provider) === normalizedProvider &&
     skillStore.loadedProvider === normalizedProvider
   ) {
     refreshes.push(

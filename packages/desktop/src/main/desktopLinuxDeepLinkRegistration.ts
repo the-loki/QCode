@@ -9,9 +9,9 @@ import {
 } from "./desktopLinuxXdg.js";
 
 const LINUX_DEEP_LINK_DESKTOP_FILE = "qcode.desktop";
-const LINUX_DEEP_LINK_MIME_TYPE = "x-scheme-handler/zcode";
+const LINUX_DEEP_LINK_MIME_TYPE = "x-scheme-handler/qcode";
 // 归属标记：用于识别用户级 qcode.desktop 是否由本应用写入（历史所有版本都带这行 Comment）。
-const LINUX_DESKTOP_ENTRY_OWNERSHIP_MARKER = "Comment=ZCode Desktop App";
+const LINUX_DESKTOP_ENTRY_OWNERSHIP_MARKER = "Comment=QCode Desktop App";
 
 type LinuxDesktopEnv = {
   APPIMAGE?: string;
@@ -109,7 +109,7 @@ function createLinuxDeepLinkDesktopEntry(params: {
   productName?: string;
   iconName?: string;
 }): string {
-  const productName = params.productName ?? "ZCode";
+  const productName = params.productName ?? "QCode";
   const iconName = params.iconName ?? "qcode";
   const command = {
     executablePath: params.executablePath,

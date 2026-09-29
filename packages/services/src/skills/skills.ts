@@ -1,17 +1,17 @@
-import type { ZCodeProvider, SkillsPromptContext, SkillsListResult } from "@zcode/shared";
-import { ServiceChannels } from "@zcode/shared";
+import type { QCodeProvider, SkillsPromptContext, SkillsListResult } from "@qcode/shared";
+import { ServiceChannels } from "@qcode/shared";
 import { createServiceDescriptor } from "../descriptors.js";
 
 export interface ISkillsService {
   list(params: {
     workspacePath: string;
     workspaceIdentity?: string;
-    provider?: ZCodeProvider;
+    provider?: QCodeProvider;
   }): Promise<SkillsListResult>;
   setEnabled(params: {
     workspacePath: string;
     workspaceIdentity?: string;
-    provider?: ZCodeProvider;
+    provider?: QCodeProvider;
     scope?: "workspace" | "user" | "plugin";
     skillId: string;
     enabled: boolean;
@@ -19,7 +19,7 @@ export interface ISkillsService {
   buildPromptContext(params: {
     workspacePath: string;
     workspaceIdentity?: string;
-    provider?: ZCodeProvider;
+    provider?: QCodeProvider;
     prompt: string;
   }): Promise<SkillsPromptContext>;
   /** 将指定 skill 复制到通用目录（.qcode/skills），成功后返回新 skill 的路径。 */

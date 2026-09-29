@@ -1,16 +1,16 @@
-import type { IZCodeTaskService } from "@zcode/services";
+import type { IQCodeTaskService } from "@qcode/services";
 import type { WorkspaceTabState } from "@/store/tabStore.js";
 import { logger } from "@/logger.js";
 
 export function releaseWorkspaceRuntimeAfterProjectRemoval({
   tab,
-  zcodeTaskService,
+  qcodeTaskService,
 }: {
   tab: Pick<WorkspaceTabState, "workspacePath" | "workspaceIdentity">;
-  zcodeTaskService: Pick<IZCodeTaskService, "releaseWorkspacePreparation">;
+  qcodeTaskService: Pick<IQCodeTaskService, "releaseWorkspacePreparation">;
 }): void {
   const workspaceIdentity = tab.workspaceIdentity?.trim() || undefined;
-  void zcodeTaskService
+  void qcodeTaskService
     .releaseWorkspacePreparation({
       workspacePath: tab.workspacePath,
       ...(workspaceIdentity ? { workspaceIdentity } : {}),

@@ -133,7 +133,7 @@ export function projectAssistantCodeComments(
         [CODE_COMMENT_DIRECTIVE_NAME, "qcode-file-citation"],
         protectedRanges,
         {
-          minimumSingleColonPrefixLength: ":zcode".length,
+          minimumSingleColonPrefixLength: ":qcode".length,
           singleColonDirectiveNames: ["qcode-file-citation"],
           tripleColonDirectiveNames: ["qcode-file-citation"],
         },

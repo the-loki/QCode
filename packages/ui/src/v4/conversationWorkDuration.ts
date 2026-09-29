@@ -1,4 +1,4 @@
-import type { Locale } from "@zcode/shared";
+import type { Locale } from "@qcode/shared";
 import type { IntlInstance } from "@/i18n/IntlProvider.js";
 
 function formatDurationUnit(

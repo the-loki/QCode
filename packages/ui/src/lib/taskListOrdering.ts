@@ -1,4 +1,4 @@
-import type { ZCodeTaskMeta } from "@zcode/shared";
+import type { QCodeTaskMeta } from "@qcode/shared";
 import { isTaskListRowActive } from "@/v4/taskListRowActivity.js";
 
 type TaskListTimeSortBy = "created" | "updated";
@@ -62,9 +62,9 @@ function compareTaskListItemsWithRunningFirst<T extends TaskListSortableItem>(
   return compareTaskListItemsByTime(left, right, sortBy);
 }
 
-export function compareZCodeTaskListItems(
-  left: ZCodeTaskMeta,
-  right: ZCodeTaskMeta,
+export function compareQCodeTaskListItems(
+  left: QCodeTaskMeta,
+  right: QCodeTaskMeta,
   sortBy: TaskListTimeSortBy,
 ): number {
   return compareTaskListItemsWithRunningFirst(left, right, sortBy, isTaskListRowActive);

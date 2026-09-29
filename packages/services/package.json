@@ -1,5 +1,5 @@
 {
-  "name": "@zcode/services",
+  "name": "@qcode/services",
   "private": true,
   "type": "module",
   "imports": {
@@ -19,11 +19,11 @@
   },
   "dependencies": {
     "@larksuiteoapi/node-sdk": "1.64.0",
-    "@zcode/provider": "workspace:*",
-    "@zcode/provider-node": "workspace:*",
-    "@zcode/rpc": "workspace:*",
-    "@zcode/shared": "workspace:*",
-    "@zcode/zcode-cua": "workspace:*",
+    "@qcode/provider": "workspace:*",
+    "@qcode/provider-node": "workspace:*",
+    "@qcode/rpc": "workspace:*",
+    "@qcode/shared": "workspace:*",
+    "@qcode/qcode-cua": "workspace:*",
     "croner": "^10.0.1",
     "ignore": "^5.3.2",
     "node-forge": "^1.4.0",

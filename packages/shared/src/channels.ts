@@ -87,14 +87,14 @@ export const ServiceChannels = {
   CuaPipSession: "cua-pip-session",
   /** 跨窗口广播 */
   Broadcast: "broadcast",
-  /** ZCode task wrapper 服务 */
-  ZCodeTask: "qcode-task",
+  /** QCode task wrapper 服务 */
+  QCodeTask: "qcode-task",
   /** 窗口 Host 聚合 workspace/task 投影与列表写路由 */
   WindowController: "window-controller",
-  /** ZCode Protocol agent 服务 */
-  ZCodeAgent: "qcode-agent",
-  /** ZCode session 应用服务 */
-  ZCodeSession: "qcode-session",
+  /** QCode Protocol agent 服务 */
+  QCodeAgent: "qcode-agent",
+  /** QCode session 应用服务 */
+  QCodeSession: "qcode-session",
   /** 会话分享发布、预览与 continuation API 编排 */
   ConversationShare: "conversation-share",
   /** 文件系统监视服务 */
@@ -112,7 +112,7 @@ export const ServiceChannels = {
   /** Coding Plan 订阅购买服务 */
   CodingPlanSubscription: "coding-plan-subscription",
   ClientConfig: "client-config",
-  /** ZCode 客户端场景配置服务 */
+  /** QCode 客户端场景配置服务 */
   ClientScenes: "client-scenes",
   /** Skills 管理服务 */
   Skills: "skills",
@@ -124,7 +124,7 @@ export const ServiceChannels = {
   PluginSync: "plugin-sync",
   /** 插件管理服务 */
   Plugins: "plugins",
-  /** 设置页插件管理服务（UI 平台能力面收敛，不再直触 zcodeAgentService） */
+  /** 设置页插件管理服务（UI 平台能力面收敛，不再直触 qcodeAgentService） */
   PluginManagement: "plugin-management",
   /** Subagents 管理服务 */
   Subagents: "subagents",
@@ -281,7 +281,7 @@ export const PlatformChannels = {
   OpenInFileManager: "qcode:open-in-file-manager",
   /** Renderer → Main：使用系统默认应用打开本地文件 */
   OpenExternalFile: "qcode:open-external-file",
-  /** Renderer → Main：打开 ZCode Computer Use 权限引导 */
+  /** Renderer → Main：打开 QCode Computer Use 权限引导 */
   OpenCuaPermissionOnboarding: "qcode:open-cua-permission-onboarding",
   /** Renderer → Main：取消当前 renderer 发起的一次权限引导 participant */
   CancelCuaPermissionOnboarding: "qcode:cancel-cua-permission-onboarding",
@@ -374,7 +374,7 @@ export const PlatformChannels = {
   /** Main → Renderer：当前窗口页面缩放档位变化 */
   DesktopZoomLevelChanged: "qcode:desktop-zoom-level-changed",
   /** Renderer → Main：读取开发态 stdio tap proxy 开关状态 */
-  GetZCodeStdioTapDevState: "qcode:get-zcode-stdio-tap-dev-state",
+  GetQCodeStdioTapDevState: "qcode:get-qcode-stdio-tap-dev-state",
   /** Main → Renderer：本地 setting.json 已由 main 进程更新 */
   SettingsChanged: "qcode:settings-changed",
   /** Main → Renderer：应用语言已切换 */
@@ -421,7 +421,7 @@ export interface EmbeddedBrowserWheelBoundaryPayload {
 // ============================================================================
 
 /**
- * Electron `<webview>`（partition=persist:zcode-coding-plan）的 `sendToHost` / `ipc-message` 频道。
+ * Electron `<webview>`（partition=persist:qcode-coding-plan）的 `sendToHost` / `ipc-message` 频道。
  * 官网页通过 preload 注入的 window.qcodeBridge 调用，不经过 main process。
  */
 export const CodingPlanWebviewChannels = {
@@ -437,14 +437,14 @@ export interface CodingPlanPurchaseCompletePayload {
 }
 
 /**
- * 官网页 window.__zcodeLang__ 的取值，与 App IntlProvider 的 Locale 一致。
+ * 官网页 window.__qcodeLang__ 的取值，与 App IntlProvider 的 Locale 一致。
  * App locale 变化时通过 executeJavaScript 重写此变量并派发 lang-change 事件。
  */
 export type CodingPlanWebviewLocale = "zh-CN" | "en-US";
 
 /**
  * 官网页 lang-change 事件 detail。App 用 executeJavaScript 在 main world 派发
- * `zcode-coding-plan-lang-change` CustomEvent，website 侧（qcodeBridge.onLangChange 或
+ * `qcode-coding-plan-lang-change` CustomEvent，website 侧（qcodeBridge.onLangChange 或
  * 直接 window.addEventListener）订阅后切换 copy。
  */
 export interface CodingPlanWebviewLangChangeDetail {
@@ -469,9 +469,9 @@ export const InternalChannels = {
 } as const;
 
 /** @deprecated `/ws` 已忽略该头；保留常量仅供旧客户端兼容。 */
-export const ZCODE_RPC_CLIENT_MODE_HEADER = "x-qcode-rpc-client-mode";
+export const QCODE_RPC_CLIENT_MODE_HEADER = "x-qcode-rpc-client-mode";
 /** desktop 先经受保护 HTTP endpoint 申请，再在 `/ws/host` 握手时一次性消费。 */
-export const ZCODE_RPC_HOST_CAPABILITY_HEADER = "x-qcode-rpc-host-capability";
+export const QCODE_RPC_HOST_CAPABILITY_HEADER = "x-qcode-rpc-host-capability";
 
 // ============================================================================
 // 进程间消息类型 —— main ↔ host process 之间的 postMessage
@@ -528,7 +528,7 @@ export const HostMessageTypes = {
   BrowserExecuteResult: "browser-execute-result",
   /** main → host：本地视频 canonical path 授权结果 */
   LocalMediaPreviewPathAuthorizeResult: "local-media-preview-path-authorize-result",
-  /** Main → Host：全局前台 ZCode 窗口派生的 producer focus fact。 */
+  /** Main → Host：全局前台 QCode 窗口派生的 producer focus fact。 */
   CuaPipFocusChanged: "cua-pip-focus-changed",
   /** main → host：要求 Host 现读本地 Source，并同步指定 Remote Environment。 */
   ProviderProvisioningExecute: "provider-provisioning-execute",
@@ -607,7 +607,7 @@ export const HostResponseTypes = {
   BotRemoteWorkspaceRuntimePortRequest: "bot-remote-workspace-runtime-port-request",
   /** host → main：Agent 请求向另一个 session 发送消息 */
   SessionMessageSendRequested: "session-message-send-requested",
-  /** host → main：声明一个 ZCode Agent session 当前归属该 host */
+  /** host → main：声明一个 QCode Agent session 当前归属该 host */
   SessionRouteAnnounce: "session-route-announce",
   /** host → main：目标 host 完成本地 session message 投递 */
   SessionMessageDeliverResult: "session-message-deliver-result",

@@ -1,4 +1,4 @@
-import { createUuid } from "@zcode/shared";
+import { createUuid } from "@qcode/shared";
 
 export const CONVERSATION_SELECTION_MAX_TEXT_LENGTH = 8_000;
 const CONVERSATION_SELECTION_MAX_COUNT = 8;
@@ -55,7 +55,7 @@ type ConversationSelectionAppendResult =
 const ADD_EVENT = "qcode:conversation-selection-add";
 const USER_SELECT_BLOCK_PATTERN = /(?:\n\n)?# userselect:\n```userselect\n([\s\S]*?)\n```\s*$/;
 const LEGACY_BLOCK_PATTERN =
-  /(?:\n\n)?# Conversation selections:\n```zcode-conversation-selections\n([\s\S]*?)\n```\s*$/;
+  /(?:\n\n)?# Conversation selections:\n```qcode-conversation-selections\n([\s\S]*?)\n```\s*$/;
 const referencesByScope = new Map<string, readonly ConversationSelectionReference[]>();
 const limitReasonByScope = new Map<string, ConversationSelectionLimitReason>();
 

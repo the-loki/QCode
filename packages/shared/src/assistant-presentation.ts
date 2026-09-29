@@ -1,9 +1,9 @@
 import {
   getLatestAssistantContentPart,
-  type ZCodeAssistantMessagePart,
+  type QCodeAssistantMessagePart,
 } from "./assistant-message-parts.js";
 
-export interface ZCodeAssistantPresentationToolCall {
+export interface QCodeAssistantPresentationToolCall {
   toolId: string;
   parentToolUseId?: string | null;
   kind: string;
@@ -15,7 +15,7 @@ export interface ZCodeAssistantPresentationToolCall {
   raw?: unknown;
 }
 
-export type ZCodeAssistantPresentationBlock =
+export type QCodeAssistantPresentationBlock =
   | {
       type: "content";
       content: string;
@@ -26,21 +26,21 @@ export type ZCodeAssistantPresentationBlock =
     }
   | {
       type: "tool-call";
-      toolCall: ZCodeAssistantPresentationToolCall;
+      toolCall: QCodeAssistantPresentationToolCall;
     };
 
-export interface ZCodeAssistantPresentation {
-  messageParts: ZCodeAssistantMessagePart[];
-  blocks: ZCodeAssistantPresentationBlock[];
-  latestPart: Extract<ZCodeAssistantPresentationBlock, { type: "content" }> | null;
-  historyBlocks: ZCodeAssistantPresentationBlock[];
+export interface QCodeAssistantPresentation {
+  messageParts: QCodeAssistantMessagePart[];
+  blocks: QCodeAssistantPresentationBlock[];
+  latestPart: Extract<QCodeAssistantPresentationBlock, { type: "content" }> | null;
+  historyBlocks: QCodeAssistantPresentationBlock[];
 }
 
-export interface BuildZCodeAssistantPresentationOptions {
+export interface BuildQCodeAssistantPresentationOptions {
   content: string;
   thought?: string;
-  toolCalls?: readonly ZCodeAssistantPresentationToolCall[];
-  parts?: readonly ZCodeAssistantMessagePart[];
+  toolCalls?: readonly QCodeAssistantPresentationToolCall[];
+  parts?: readonly QCodeAssistantMessagePart[];
   streaming?: boolean;
   interrupted?: boolean;
   settling?: boolean;
@@ -50,7 +50,7 @@ function buildFallbackAssistantParts({
   content,
   thought,
   toolCalls,
-}: Pick<BuildZCodeAssistantPresentationOptions, "content" | "thought" | "toolCalls">) {
+}: Pick<BuildQCodeAssistantPresentationOptions, "content" | "thought" | "toolCalls">) {
   const rootToolCalls = (toolCalls ?? []).filter((toolCall) => {
     const parentToolUseId = toolCall.parentToolUseId ?? null;
     return (
@@ -73,7 +73,7 @@ function buildFallbackAssistantParts({
   ];
 }
 
-export function buildZCodeAssistantPresentation({
+export function buildQCodeAssistantPresentation({
   content,
   thought,
   toolCalls = [],
@@ -81,14 +81,14 @@ export function buildZCodeAssistantPresentation({
   streaming = false,
   interrupted = false,
   settling = false,
-}: BuildZCodeAssistantPresentationOptions): ZCodeAssistantPresentation {
+}: BuildQCodeAssistantPresentationOptions): QCodeAssistantPresentation {
   const messageParts =
     parts && parts.length > 0
       ? [...parts]
       : buildFallbackAssistantParts({ content, thought, toolCalls });
   const toolCallById = new Map(toolCalls.map((toolCall) => [toolCall.toolId, toolCall]));
   const renderedToolCallIds = new Set<string>();
-  const blocks: ZCodeAssistantPresentationBlock[] = [];
+  const blocks: QCodeAssistantPresentationBlock[] = [];
 
   for (const part of messageParts) {
     if (part.type === "content") {
@@ -122,12 +122,12 @@ export function buildZCodeAssistantPresentation({
       : getLatestAssistantContentPart(
           blocks
             .filter(
-              (block): block is Extract<ZCodeAssistantPresentationBlock, { type: "content" }> =>
+              (block): block is Extract<QCodeAssistantPresentationBlock, { type: "content" }> =>
                 block.type === "content",
             )
             .map((block) => ({ type: "content", content: block.content })),
         );
-  let latestPart: Extract<ZCodeAssistantPresentationBlock, { type: "content" }> | null = null;
+  let latestPart: Extract<QCodeAssistantPresentationBlock, { type: "content" }> | null = null;
   let latestBlockIndex = -1;
   if (latestContentPart) {
     latestBlockIndex = blocks.findLastIndex(
@@ -136,7 +136,7 @@ export function buildZCodeAssistantPresentation({
     latestPart =
       latestBlockIndex >= 0
         ? (blocks[latestBlockIndex] as Extract<
-            ZCodeAssistantPresentationBlock,
+            QCodeAssistantPresentationBlock,
             { type: "content" }
           >)
         : null;
