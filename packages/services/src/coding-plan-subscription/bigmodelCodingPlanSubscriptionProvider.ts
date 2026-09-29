@@ -282,7 +282,7 @@ export class BigModelCodingPlanSubscriptionProvider {
         ticket: request.ticket ?? null,
         randstr: request.randstr ?? null,
         // Coding Plan 试算接口默认按 Maas 渠道处理，不显式标记会丢失 zcode 来源归因。
-        salesChannel: request.salesChannel ?? "zcode",
+        salesChannel: request.salesChannel ?? "qcode",
       },
     );
   }

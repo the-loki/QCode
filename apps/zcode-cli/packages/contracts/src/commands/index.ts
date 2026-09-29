@@ -7,7 +7,7 @@ import type { ExecutionContext, TraceContext } from "../tracing/tracer.js";
 
 export type CustomCommandScope = "project" | "user" | "system" | "admin";
 
-export type CustomCommandSource = "agents" | "zcode" | "plugin";
+export type CustomCommandSource = "agents" | "qcode" | "plugin";
 
 export type CustomCommandDiagnosticSeverity = "warning" | "error";
 

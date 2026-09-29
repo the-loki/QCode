@@ -223,7 +223,7 @@ class NodeMcpAdapter implements McpPort {
   private readonly workingDirectory?: string;
 
   constructor(options: CreateMcpAdapterOptions) {
-    this.clientName = options.clientName ?? "zcode";
+    this.clientName = options.clientName ?? "qcode";
     this.clientVersion = options.clientVersion ?? "0.0.0";
     this.connectionContext = options.connectionContext;
     this.env = options.env;

@@ -163,7 +163,7 @@ export async function createZCodeApp(options: ZCodeAppOptions): Promise<ZCodeApp
     options,
   );
   const loggerFactory = options.loggerFactory ?? createNodeLoggerFactory({ env: options.env });
-  const logger = loggerFactory.createLogger("zcode").child({
+  const logger = loggerFactory.createLogger("qcode").child({
     ...traceContextToLogContext(traceContext),
     module: "bootstrap",
   });
@@ -185,7 +185,7 @@ export async function createZCodeApp(options: ZCodeAppOptions): Promise<ZCodeApp
     configResult,
     startupTimer,
   });
-  const modelLogger = loggerFactory.createLogger("zcode").child({
+  const modelLogger = loggerFactory.createLogger("qcode").child({
     ...traceContextToLogContext(traceContext),
     module: "adapters.model",
   });

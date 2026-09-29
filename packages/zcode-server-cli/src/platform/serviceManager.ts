@@ -27,7 +27,7 @@ export function createDaemonServiceDescriptor(options: {
     platform: options.platform,
     command: join(
       options.layout.stableBinDir,
-      options.platform === "win32" ? "zcode.cmd" : "zcode",
+      options.platform === "win32" ? "qcode.cmd" : "qcode",
     ),
     args: ["serve", "--supervisor", "--service-entry", "--server-root", options.layout.serverRoot],
     name: `com.zhipu.qcode.server.${stablePathId(options.layout.serverRoot)}`,

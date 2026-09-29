@@ -30,7 +30,7 @@ function agentsWithCategory(
 
 function formatAgentName(agent: string, intl: ReturnType<typeof useZCodeIntl>["intl"]): string {
   switch (agent) {
-    case "zcode":
+    case "qcode":
       return intl.formatMessage({ id: "settingsSync.agent.qcode" });
     case "claudeCode":
       return intl.formatMessage({ id: "settingsSync.agent.claudeCode" });

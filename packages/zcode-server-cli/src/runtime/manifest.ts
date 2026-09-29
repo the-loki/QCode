@@ -14,7 +14,7 @@ export const supportedServerTargets = [
 export type ServerTarget = (typeof supportedServerTargets)[number];
 
 export interface ServerRuntimeManifest {
-  product: "zcode-server";
+  product: "qcode-server";
   target: ServerTarget;
   appVersion: string;
   nodeVersion: string;
@@ -33,7 +33,7 @@ export interface ServerRuntimeManifest {
 
 export const serverRuntimeManifestSchema = z
   .object({
-    product: z.literal("zcode-server"),
+    product: z.literal("qcode-server"),
     target: z.enum(supportedServerTargets),
     appVersion: z.string().min(1),
     nodeVersion: z.string().min(1),
@@ -71,16 +71,16 @@ export function createRuntimeManifest(
   extras: Pick<ServerRuntimeManifest, "tools" | "plugins" | "components"> = {},
 ): ServerRuntimeManifest {
   return {
-    product: "zcode-server",
+    product: "qcode-server",
     target,
     appVersion,
     nodeVersion: SERVER_RUNTIME_NODE_VERSION,
     // 入口是 ESM `.js`（tsup 产物）：server-cli 通过 `new URL("./server-core.js")` fork Core、
-    // 通过同目录 zcode.cjs 委派既有 CLI，三者必须同目录且文件名与产物一致。
+    // 通过同目录 qcode.cjs 委派既有 CLI，三者必须同目录且文件名与产物一致。
     entrypoints: {
       cli: "runtime/server-cli.js",
       core: "runtime/server-core.js",
-      agent: "runtime/zcode.cjs",
+      agent: "runtime/qcode.cjs",
     },
     native: ["node-pty"],
     ...extras,

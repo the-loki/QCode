@@ -125,9 +125,9 @@ export function getAgentKindLabel(
   const inputRecord = isPlainRecord(toolCall.input) ? toolCall.input : null;
   const rawRecord = isPlainRecord(toolCall.raw) ? toolCall.raw : null;
   const rawName =
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "agentType"]) ??
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "agent_type"]) ??
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "subagent_type"]);
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "agentType"]) ??
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "agent_type"]) ??
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "subagent_type"]);
 
   // 流式 input 的半截 JSON 暂时读不到 subagent_type，若一读不到就按“模型省略字段”
   // 回退 general-purpose，首帧会误报、之后再跳成真实类型。只有 inputPreviewComplete 明确为 true
@@ -148,7 +148,7 @@ export function getAgentColor(toolCall: AgentToolCall) {
   const outputRecord = readRecordFromUnknown(toolCall.output);
   const inputRecord = isPlainRecord(toolCall.input) ? toolCall.input : null;
   const rawColor =
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "color"]) ??
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "color"]) ??
     readStringFromNestedRecord(toolCall.raw, ["color"]) ??
     readAgentColorFromRecord(inputRecord) ??
     readAgentColorFromRecord(outputRecord);
@@ -185,8 +185,8 @@ export function readBackgroundAgentInfo(toolCall: AgentToolCall) {
 
 export function getAgentActivityContent(toolCall: AgentToolCall) {
   const taskNotificationResult =
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "taskNotification", "result"]) ??
-    readStringFromNestedRecord(toolCall.raw, ["_meta", "zcode", "taskNotification", "summary"]);
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "taskNotification", "result"]) ??
+    readStringFromNestedRecord(toolCall.raw, ["_meta", "qcode", "taskNotification", "summary"]);
   if (taskNotificationResult) {
     // background Agent 的 output_file 是完整 sidechain transcript，
     // task-notification result 才是适合用户阅读的完成摘要。优先展示摘要，避免展开后被 JSONL 淹没。

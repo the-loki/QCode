@@ -101,7 +101,7 @@ export async function runZCodeProtocolAgent(
       entrypoint: "zcode_protocol",
     },
   });
-  const logger = loggerFactory.createLogger("zcode").child({
+  const logger = loggerFactory.createLogger("qcode").child({
     ...traceContextToLogContext(traceContext),
     module: "bootstrap.zcode_protocol",
   });

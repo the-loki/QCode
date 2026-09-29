@@ -83,9 +83,9 @@ function collectMessageCandidatesFromRecord(record: Record<string, unknown>): st
     ["data", "error", "details"],
     // zcode-cli 会把模型/网络错误摘要放在 data.qcode.error 下。
     // 之前 UI 只读 data.error，导致已经结构化好的 provider 根因仍被 “Internal error” 盖住。
-    ["data", "zcode", "error", "message"],
-    ["data", "zcode", "error", "detail"],
-    ["data", "zcode", "error", "details"],
+    ["data", "qcode", "error", "message"],
+    ["data", "qcode", "error", "detail"],
+    ["data", "qcode", "error", "details"],
   ];
   for (const path of messagePaths) {
     push(readValueByPath(record, path));
@@ -177,7 +177,7 @@ function readFirstAttributionFromPaths(error: unknown): ErrorAttribution | undef
     ["attribution"],
     ["data", "attribution"],
     ["data", "error", "attribution"],
-    ["data", "zcode", "error", "attribution"],
+    ["data", "qcode", "error", "attribution"],
   ];
   for (const path of paths) {
     const parsed = errorAttributionSchema.safeParse(readValueByPath(record, path));
@@ -208,9 +208,9 @@ export function normalizeZCodeUiError(
     ["providerCode"],
     ["data", "code"],
     ["data", "error", "code"],
-    ["data", "zcode", "error", "code"],
+    ["data", "qcode", "error", "code"],
     // turn-errors 会把 provider 业务码写入 summary.code；部分链路仍只落在 context.providerCode。
-    ["data", "zcode", "error", "context", "providerCode"],
+    ["data", "qcode", "error", "context", "providerCode"],
     ["data", "error", "context", "providerCode"],
     ["context", "providerCode"],
   ]);
@@ -218,32 +218,32 @@ export function normalizeZCodeUiError(
     ["detail"],
     ["data", "detail"],
     ["data", "error", "detail"],
-    ["data", "zcode", "error", "detail"],
+    ["data", "qcode", "error", "detail"],
   ]);
   const underlyingErrorMessage = readFirstStringFromPaths(error, [
     ["underlyingErrorMessage"],
     ["data", "underlyingErrorMessage"],
     ["data", "error", "underlyingErrorMessage"],
-    ["data", "zcode", "error", "underlyingErrorMessage"],
+    ["data", "qcode", "error", "underlyingErrorMessage"],
   ]);
   const underlyingErrorDetail = readFirstStringFromPaths(error, [
     ["underlyingErrorDetail"],
     ["data", "underlyingErrorDetail"],
     ["data", "error", "underlyingErrorDetail"],
-    ["data", "zcode", "error", "underlyingErrorDetail"],
+    ["data", "qcode", "error", "underlyingErrorDetail"],
   ]);
   const providerCodeFromDetail = detailFromError?.match(/provider_code=([0-9]+)/)?.[1];
   const traceIdFromError = readFirstStringFromPaths(error, [
     ["traceId"],
     ["data", "traceId"],
     ["data", "error", "traceId"],
-    ["data", "zcode", "error", "traceId"],
+    ["data", "qcode", "error", "traceId"],
   ]) as TraceId | undefined;
   const taskIdFromError = readFirstStringFromPaths(error, [
     ["taskId"],
     ["data", "taskId"],
     ["data", "error", "taskId"],
-    ["data", "zcode", "error", "taskId"],
+    ["data", "qcode", "error", "taskId"],
   ]);
   const attribution = readFirstAttributionFromPaths(error);
 

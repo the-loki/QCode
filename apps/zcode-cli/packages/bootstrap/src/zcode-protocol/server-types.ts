@@ -329,7 +329,7 @@ export function requireSession(
 }
 
 export function createProtocolLogger(deps: ZCodeProtocolAgentDependencies): Logger | undefined {
-  return deps.loggerFactory?.createLogger("zcode").child({
+  return deps.loggerFactory?.createLogger("qcode").child({
     module: "bootstrap.zcode_protocol",
   });
 }

@@ -1,4 +1,4 @@
-const packageDirName = "zcode";
+const packageDirName = "qcode";
 
 export function installScriptSource(baseUrl) {
   return `#!/usr/bin/env sh

@@ -11,7 +11,7 @@ export const resolveDefaultSmbUrl = (env = process.env) =>
   `smb://${resolveIntranetMachineHost(env)}/shared`;
 export const DEFAULT_SMB_URL = resolveDefaultSmbUrl();
 export const DEFAULT_MOUNT_ROOT = "/Volumes/shared";
-export const DEFAULT_DESTINATION_ROOT = resolve(DEFAULT_MOUNT_ROOT, "zcode", "deps");
+export const DEFAULT_DESTINATION_ROOT = resolve(DEFAULT_MOUNT_ROOT, "qcode", "deps");
 export const RELEASE_DIRECTORY_PREFIX = "zcode-cli-";
 
 const root = resolve(import.meta.dirname, "../../..");

@@ -1,4 +1,4 @@
-export const CLI_COMMAND_NAME = "zcode";
+export const CLI_COMMAND_NAME = "qcode";
 export const CLI_PROCESS_NAME = "zcode-cli";
 
 interface ProcessTitleTarget {

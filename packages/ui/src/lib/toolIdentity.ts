@@ -115,7 +115,7 @@ function readRawToolNameCandidates(raw: unknown) {
       readNestedString(raw, ["toolName"]) ??
       readNestedString(raw, ["tool_name"]) ??
       readNestedString(raw, ["name"]),
-    zcode: readNestedString(raw, ["_meta", "zcode", "toolName"]),
+    zcode: readNestedString(raw, ["_meta", "qcode", "toolName"]),
     rawKind: readNestedString(raw, ["kind"]),
     rawTitle: readNestedString(raw, ["title"]),
   };

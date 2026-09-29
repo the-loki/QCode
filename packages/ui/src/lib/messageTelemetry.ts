@@ -123,7 +123,7 @@ interface ActiveAgentStep {
 interface AgentStepSkillMetadata {
   qualifiedName?: string;
   pluginId?: string;
-  source?: "agents" | "zcode" | "bundled" | "plugin" | "remote";
+  source?: "agents" | "qcode" | "bundled" | "plugin" | "remote";
 }
 
 interface AgentStepModelIdentity {

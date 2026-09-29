@@ -388,5 +388,5 @@ function buildRemoteServerCommand(
       );
     }
   }
-  return `${envParts.join(" ")} ~/.qcode/server/node ~/.qcode/server/zcode-server.cjs`;
+  return `${envParts.join(" ")} ~/.qcode/server/node ~/.qcode/server/qcode-server.cjs`;
 }

@@ -211,7 +211,7 @@ export function createNodeLoggerFactory(options: NodeLoggerFactoryOptions = {}):
         logDir,
         logger:
           scheduleOptions.logger ??
-          create("zcode", {
+          create("qcode", {
             module: "adapters.logging",
           }),
       });

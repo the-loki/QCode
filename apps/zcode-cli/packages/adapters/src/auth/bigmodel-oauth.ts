@@ -4,7 +4,7 @@ import { buildBigModelApiUrl } from "@zcode/shared";
 
 const BIGMODEL_AUTHORIZE_PATH = "/login";
 const BIGMODEL_TOKEN_PATH = "/api/auth/tokenByAuthCode";
-const BIGMODEL_APP_ID = "zcode";
+const BIGMODEL_APP_ID = "qcode";
 const OAUTH_STATE_BYTES = 32;
 const JSON_CONTENT_TYPE = "application/json";
 
