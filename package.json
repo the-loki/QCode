@@ -16,6 +16,7 @@
     "prepare:desktop-runtime": "pnpm --filter @zcode/desktop prepare:runtime-assets",
     "dep:graph": "node scripts/dependency-graph.mjs",
     "dep:refs": "node scripts/dep-refs.mjs",
+    "test": "vitest run",
     "verify:pre-push": "pnpm run lint && pnpm run architecture:check -- --changed",
     "build": "pnpm -r build",
     "build:desktop-agent:bytecode": "node scripts/build-desktop-agent-bytecode.mjs",
@@ -70,7 +71,8 @@
     "ts-morph": "^28.0.0",
     "tsx": "^4.19.4",
     "turbo": "^2.4.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^3.2.7"
   },
   "peerDependencies": {
     "@tanstack/react-virtual": "^3.13.23"
