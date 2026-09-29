@@ -8,7 +8,6 @@ export type {
   WorkspaceFileEntry,
   SystemInfo,
   AppSettings,
-  ElectronReleaseChannel,
   IntegratedTerminalShellDialect,
   IntegratedTerminalShellOption,
   IntegratedTerminalShellSelection,
@@ -211,14 +210,11 @@ export type {
   IPlatformService,
   OpenInEditorRemoteTarget,
   OpenInEditorOptions,
-  PostUpdateReleaseNotesPayload,
   RemoteConnectionRuntimeLog,
   RemoteSessionClosedEvent,
   RemoteServiceSession,
   SSHConfigAliasOption,
   TaskNotificationPayload,
-  UpdateCheckResultPayload,
-  UpdateStatePayload,
   WSLDistro,
   ZCodeStdioTapDevState,
 } from "./platform.js";
@@ -279,7 +275,6 @@ export * from "./settings-sync.js";
 export * from "./uuid.js";
 export * from "./usage-stats.js";
 export * from "./coding-plan-subscription.js";
-export * from "./forceUpdate.js";
 export * from "./intranetProbe.js";
 export * from "./intranetDefaults.js";
 export * from "./hooks.js";
