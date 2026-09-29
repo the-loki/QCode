@@ -48,7 +48,7 @@ function log(level: LogLevel, ...args: unknown[]) {
     return;
   }
   consoleFns[level](formatLogPrefix("ui"), ...args);
-  // ui 包单独 typecheck 时拿不到 desktop renderer 注入的 window.zcode 声明，
+  // ui 包单独 typecheck 时拿不到 desktop renderer 注入的 window.qcode 声明，
   // 而且 Electron bridge 只接收 info/warn/error；debug 原样透传会让类型和宿主协议都不一致。
   // 这里显式收窄 bridge 形状，并只把主进程真正支持的级别转发过去。
   if (level !== "debug" && typeof window !== "undefined") {

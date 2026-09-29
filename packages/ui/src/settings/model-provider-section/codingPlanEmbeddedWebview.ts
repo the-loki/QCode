@@ -61,7 +61,7 @@ const CODING_PLAN_WEBVIEW_CREDENTIAL_LOCAL_STORAGE_KEYS = [
   "zcodejwttoken",
   "oauth:bigmodel:access_token",
 ] as const;
-const CODING_PLAN_REPORT_CONTEXT_STORAGE_KEY = "zcode:coding-plan:report-context";
+const CODING_PLAN_REPORT_CONTEXT_STORAGE_KEY = "qcode:coding-plan:report-context";
 
 export function resolveCodingPlanWebsiteProvider(
   providerId: CodingPlanProviderId,
@@ -170,7 +170,7 @@ export function createCodingPlanAuthInjectionScript({
   provider: CodingPlanWebsiteProvider;
   credentials: CodingPlanEmbeddedCredentials;
   theme: CodingPlanEmbeddedTheme;
-  // App 当前 locale，写入 window.__zcodeLang__ 供 zcodeBridge.getLang() 读取，
+  // App 当前 locale，写入 window.__zcodeLang__ 供 qcodeBridge.getLang() 读取，
   // 并附带在 auth-ready 事件 detail 里让官网一次性同步初始语言。
   locale: CodingPlanWebviewLocale | null;
   reportContext?: CodingPlanEmbeddedReportContext | null;
@@ -207,15 +207,15 @@ export function createCodingPlanAuthInjectionScript({
   document.documentElement.classList.toggle("dark", zcodeTheme === "zai-dark");
   document.documentElement.classList.toggle("theme-zai-light", zcodeTheme === "zai-light");
   document.documentElement.classList.toggle("theme-zai-dark", zcodeTheme === "zai-dark");
-  localStorage.setItem("zcode-theme", zcodeTheme);
-  localStorage.setItem("zcode:coding-plan:embedded", "app");
-  // 写入当前 App locale，供官网 zcodeBridge.getLang() 读取。
+  localStorage.setItem("qcode-theme", zcodeTheme);
+  localStorage.setItem("qcode:coding-plan:embedded", "app");
+  // 写入当前 App locale，供官网 qcodeBridge.getLang() 读取。
   // 注意：这是注入 webview 执行的原始 JS，不能用 TS 语法（如 as any）。
   window.__zcodeLang__ = ${JSON.stringify(resolvedLocale)};
   const zcodeReportContext = ${JSON.stringify(normalizedReportContext)};
   window.__zcodeReportContext__ = zcodeReportContext;
   localStorage.setItem(${JSON.stringify(CODING_PLAN_REPORT_CONTEXT_STORAGE_KEY)}, JSON.stringify(zcodeReportContext));
-  window.dispatchEvent(new CustomEvent("zcode-coding-plan-auth-ready", {
+  window.dispatchEvent(new CustomEvent("qcode-coding-plan-auth-ready", {
     detail: { ...${JSON.stringify({ provider, locale: resolvedLocale })}, reportContext: zcodeReportContext },
   }));
 })()`;
@@ -304,7 +304,7 @@ body::-webkit-scrollbar,
  * 生成「更新 webview 当前 locale」的注入脚本。
  * App locale 运行时变化时对 webview executeJavaScript 此脚本：
  * 重写 window.__zcodeLang__ 并派发 zcode-coding-plan-lang-change 事件，
- * 官网侧（zcodeBridge.onLangChange 或 window 监听）据此无感切换语言。
+ * 官网侧（qcodeBridge.onLangChange 或 window 监听）据此无感切换语言。
  */
 export function createCodingPlanLangInjectionScript(locale: CodingPlanWebviewLocale): string {
   const resolvedLocale: CodingPlanWebviewLocale = locale === "zh-CN" ? "zh-CN" : "en-US";

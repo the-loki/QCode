@@ -48,7 +48,7 @@ interface CodingPlanEmbeddedWebviewDialogProps {
   /**
    * 官网页购买成功后的回调。
    *
-   * 官网页通过 preload 注入的 window.zcodeBridge.notifyPurchaseComplete({ provider })
+   * 官网页通过 preload 注入的 window.qcodeBridge.notifyPurchaseComplete({ provider })
    * 发送 zcode:coding-plan-purchase-complete 频道消息，本组件在 webview 的
    * ipc-message 事件里识别该频道并触发此回调（经 onPurchaseCompleteRef 防 stale closure）。
    * 上层（CodingPlanUpgradeDialog）在此回调里刷新 entitlements/providers 并关闭 webview。
@@ -349,7 +349,7 @@ export function CodingPlanEmbeddedWebviewDialog({
         setLoadError(event.details.reason);
         onOpenResultRef.current?.(false);
       };
-      // ipc-message: 官网页通过 preload 的 window.zcodeBridge.notifyPurchaseComplete
+      // ipc-message: 官网页通过 preload 的 window.qcodeBridge.notifyPurchaseComplete
       // 发回购买完成信号（zcode:coding-plan-purchase-complete）。
       // 参照 useEmbeddedBrowserWheelChain.ts 的 ipc-message handler 模式。
       const handleIpcMessage = (event: ElectronWebviewIpcMessageEvent) => {

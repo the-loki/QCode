@@ -84,7 +84,7 @@ export function attachZCodeBackgroundTaskNotificationToRaw(
     ...record,
     _meta: {
       ...meta,
-      zcode: {
+      qcode: {
         ...zcode,
         taskNotification: notification,
       },

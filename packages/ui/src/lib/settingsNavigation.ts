@@ -25,13 +25,13 @@ type SettingsUsageTabTarget = "app" | "codingPlan";
 type SettingsPluginTabTarget = "plugins" | "mcps" | "skills" | "commands";
 type SettingsPluginNavigationOrigin = "plugin-store";
 
-const SETTINGS_SECTION_INTENT_KEY = "zcode-settings-section-intent",
-  SETTINGS_USAGE_TAB_INTENT_KEY = "zcode-settings-usage-tab-intent",
-  SETTINGS_PLUGIN_TAB_INTENT_KEY = "zcode-settings-plugin-tab-intent",
+const SETTINGS_SECTION_INTENT_KEY = "qcode-settings-section-intent",
+  SETTINGS_USAGE_TAB_INTENT_KEY = "qcode-settings-usage-tab-intent",
+  SETTINGS_PLUGIN_TAB_INTENT_KEY = "qcode-settings-plugin-tab-intent",
   SETTINGS_PLUGIN_ORIGIN_INTENT_KEY = "zcode-settings-plugin-origin-intent",
   SETTINGS_PLUGIN_SCOPE_KEY_INTENT_KEY = "zcode-settings-plugin-scope-key-intent";
 const SETTINGS_MODEL_PROVIDER_ID_INTENT_KEY = "zcode-settings-model-provider-id-intent";
-const SETTINGS_SECTION_INTENT_EVENT = "zcode:settings-section-intent",
+const SETTINGS_SECTION_INTENT_EVENT = "qcode:settings-section-intent",
   SETTINGS_LAST_SECTION_STORAGE_KEY = "zcode-settings-last-section";
 const HIDDEN_SETTINGS_SECTIONS = new Set<SettingsSectionId>([
   // 产品语义：定时任务是 workspace 主视图，不能再作为设置页分区出现。

@@ -25,7 +25,7 @@ function parseDeviceIdFromArgs(): string {
 }
 
 // 在 contextBridge 建立之前就暴露同步值，让 renderer 在 React 渲染前就能读到
-contextBridge.exposeInMainWorld("__ZCODE_DEVICE_ID__", parseDeviceIdFromArgs());
+contextBridge.exposeInMainWorld("__QCODE_DEVICE_ID__", parseDeviceIdFromArgs());
 
 import type {
   AppSettings,
@@ -84,7 +84,7 @@ import {
 import { createOAuthCallbackHandler } from "./oauthCallbackBridge.js";
 
 if (shouldEnableE2ETestBridge(process.env)) {
-  contextBridge.exposeInMainWorld("__zcodeFinalArmsCustomEventsE2E", {
+  contextBridge.exposeInMainWorld("__qcodeFinalArmsCustomEventsE2E", {
     read: (): Promise<FinalArmsCustomEventE2EEntry[]> =>
       ipcRenderer.invoke(PlatformChannels.ReadFinalArmsCustomEventsE2E),
     clear: (): Promise<void> => ipcRenderer.invoke(PlatformChannels.ClearFinalArmsCustomEventsE2E),
@@ -210,7 +210,7 @@ window.addEventListener("DOMContentLoaded", updateRendererProcessTitle, {
  * 凭据管理已迁移到 host process 的 ICredentialService，
  * 通过 MessagePort RPC 访问，不再经过此 bridge。
  */
-contextBridge.exposeInMainWorld("zcode", {
+contextBridge.exposeInMainWorld("qcode", {
   connectRemote: (
     options: RemoteTarget,
     requestId?: string,

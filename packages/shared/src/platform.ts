@@ -506,7 +506,7 @@ export type CuaOsSupport =
   | { kind: "not-applicable" };
 
 /**
- * 平台操作接口 —— 替代直接访问 window.zcode
+ * 平台操作接口 —— 替代直接访问 window.qcode
  *
  * 定义需要宿主环境（Electron main / Web server）参与的操作。
  * Desktop 和 Web 各自提供不同的实现，UI 层通过此接口统一消费。

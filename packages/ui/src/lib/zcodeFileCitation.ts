@@ -55,7 +55,7 @@ const PREVIEW_EXTENSION_TO_KIND: Readonly<Record<string, ZCodeFileCitationPrevie
   ".webm": "video",
   ".weba": "audio",
 };
-const ZCODE_FILE_CITATION_DIRECTIVE_NAME = "zcode-file-citation";
+const ZCODE_FILE_CITATION_DIRECTIVE_NAME = "qcode-file-citation";
 const ZCODE_FILE_CITATION_SINGLE_COLON_PREFIX_LENGTH = ":zcode".length;
 const ZCODE_FILE_CITATION_SYNTAX = {
   allowSingleColon: true,

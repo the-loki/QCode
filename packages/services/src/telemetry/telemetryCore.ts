@@ -26,7 +26,7 @@ import { getAppConfigDir } from "../paths.js";
 
 function sessionCreateEventId(userId: string, sessionId: string): string {
   const bytes = createHash("sha256")
-    .update(JSON.stringify(["zcode:session_create:v1", userId, sessionId]))
+    .update(JSON.stringify(["qcode:session_create:v1", userId, sessionId]))
     .digest()
     .subarray(0, 16);
   bytes[6] = (bytes[6]! & 0x0f) | 0x80;
